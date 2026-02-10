@@ -1,4 +1,4 @@
-import { Button, Box, Tabs, Tab } from '@mui/material'
+import { Button, Box, Tabs, Tab, Divider } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useProductsStore } from '../store/productsStore'
@@ -35,37 +35,38 @@ export function Products() {
   }, [loadProducts, searchParams, setFilters])
 
   return (
-    <Box className="space-y-6">
-      {/* Header */}
-      <Box className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
-        <Box>
-          <h1 className="text-3xl font-bold text-white mb-2">Produtos</h1>
-          <p className="text-gray-400">
-            Dashboard administrativo de gestão de produtos com gráficos para decisão, visão rápida e
-            operação.
-          </p>
+    <Box className="space-y-6 animate-in fade-in duration-500">
+      {/* Header Compacto */}
+      {!isFormMode && (
+        <Box className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <Box>
+            <h1 className="mb-2 text-3xl font-bold text-white">Produtos</h1>
+            <p className="text-sm text-gray-400">
+              Gerencie seu catálogo de produtos com visualizações e análises em tempo real
+            </p>
+          </Box>
+          <Box className="flex items-center gap-3">
+            <Button
+              variant="outlined"
+              onClick={() => loadProducts()}
+              disabled={isLoading}
+              className="border-gray-700 text-gray-300 transition-all hover:border-gray-600 hover:bg-gray-800/50"
+            >
+              Recarregar
+            </Button>
+            <Button
+              variant="contained"
+              disabled={isLoading}
+              href={isFormMode ? '/products' : '/products?mode=form'}
+              className="bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg transition-all hover:from-blue-700 hover:to-blue-800 hover:shadow-xl"
+            >
+              {isFormMode ? 'Voltar' : 'Novo produto'}
+            </Button>
+          </Box>
         </Box>
-        <Box className="flex items-center gap-3">
-          <Button
-            variant="outlined"
-            onClick={() => loadProducts()}
-            disabled={isLoading}
-            className="border-gray-700 text-gray-300 hover:border-gray-600 hover:bg-gray-800"
-          >
-            Recarregar
-          </Button>
-          <Button
-            variant="contained"
-            disabled={isLoading}
-            href={isFormMode ? '/products' : '/products?mode=form'}
-            className="bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            {isFormMode ? 'Voltar' : 'Novo produto'}
-          </Button>
-        </Box>
-      </Box>
+      )}
 
-      {/* Tabs */}
+      {/* Tabs Elegantes */}
       {!isFormMode && (
         <Box className="border-b border-gray-800">
           <Tabs
@@ -77,13 +78,21 @@ export function Products() {
                 color: '#9ca3af',
                 textTransform: 'none',
                 fontWeight: 500,
+                fontSize: '15px',
                 minHeight: '48px',
+                padding: '12px 24px',
+                transition: 'all 0.2s ease',
                 '&.Mui-selected': {
                   color: '#3b82f6',
+                },
+                '&:hover': {
+                  color: '#d1d5db',
                 },
               },
               '& .MuiTabs-indicator': {
                 backgroundColor: '#3b82f6',
+                height: '3px',
+                borderRadius: '3px 3px 0 0',
               },
             }}
           >
@@ -93,16 +102,16 @@ export function Products() {
         </Box>
       )}
 
-      {/* Filtros */}
+      {/* Filtros Integrados */}
       {!isFormMode && view === 'dashboard' && (
-        <Box className="rounded-xl border border-gray-800 bg-gray-900 p-4">
+        <Box className="rounded-xl border border-gray-800 bg-gray-900/50 p-4 backdrop-blur-sm">
           <ProductsFilters isLoading={isLoading} />
         </Box>
       )}
 
       {/* Conteúdo */}
       {isFormMode ? (
-        <Box className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+        <Box className="rounded-2xl border border-gray-800 bg-gray-900/50 p-6 backdrop-blur-sm shadow-xl">
           <ProductForm />
         </Box>
       ) : (
@@ -127,10 +136,11 @@ export function Products() {
               {view === 'dashboard' ? (
                 <>
                   <StatsCards />
+                  <Divider className="my-8 border-gray-800" />
                   <ProductsCharts />
                 </>
               ) : (
-                <Box className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+                <Box className="rounded-2xl border border-gray-800 bg-gray-900/30 p-6 backdrop-blur-sm">
                   <ProductsTable products={products} onDelete={removeProduct} />
                 </Box>
               )}

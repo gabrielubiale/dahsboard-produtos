@@ -73,9 +73,9 @@ export function ChartTopCategoriesByValue({ data }: ChartTopCategoriesByValuePro
   }
 
   return (
-    <Card className="border-gray-800 bg-gray-900 shadow-xl">
+    <Card className="overflow-hidden rounded-2xl border border-gray-800 bg-gradient-to-br from-gray-900/90 to-gray-800/90 shadow-xl backdrop-blur-sm transition-all duration-300 hover:border-gray-700 hover:shadow-2xl">
       <CardHeader
-        className="border-b border-gray-800"
+        className="border-b border-gray-800/50 bg-gray-900/50"
         title={
           <Typography variant="h6" className="font-semibold text-white">
             Top categorias por valor total em estoque
