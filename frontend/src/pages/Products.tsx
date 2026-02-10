@@ -1,5 +1,5 @@
-import { Button, Divider, Stack, Typography } from '@mui/material'
-import { useEffect } from 'react'
+import { Button, Divider, Stack, Tabs, Tab, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useProductsStore } from '../store/productsStore'
 import { ProductsFilters } from '../features/products/components/ProductsFilters'
@@ -13,7 +13,8 @@ import { EmptyState } from '../shared/components/EmptyState'
 // Page principal de Produtos.
 // Regra: o nome do componente da page é o mesmo nome da pasta em `features` (Products <-> products).
 export function Products() {
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [view, setView] = useState<'dashboard' | 'list'>('dashboard')
 
   const { products, isLoading, error, loadProducts, removeProduct, setFilters } = useProductsStore()
 
@@ -39,30 +40,34 @@ export function Products() {
       </Typography>
 
       <Typography variant="body1" color="text.secondary">
-        Página principal de Produtos. Aqui conectamos filtros, lista, gráficos e formulário à store global
-        e à API mock.
+        Dashboard administrativo de gestão de produtos com gráficos para decisão, visão rápida e operação.
       </Typography>
 
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography variant="h6">Lista de produtos</Typography>
+        <Tabs value={view} onChange={(_, newValue) => setView(newValue)}>
+          <Tab label="Dashboard" value="dashboard" />
+          <Tab label="Lista" value="list" />
+        </Tabs>
         <Stack direction="row" spacing={2}>
           <Button variant="outlined" onClick={() => loadProducts()} disabled={isLoading}>
             Recarregar
           </Button>
-          {/* Navegação simples para alternar entre lista e formulário via query string */}
           <Button
             variant="contained"
             disabled={isLoading}
             href={isFormMode ? '/products' : '/products?mode=form'}
           >
-            {isFormMode ? 'Voltar para lista' : 'Novo produto'}
+            {isFormMode ? 'Voltar' : 'Novo produto'}
           </Button>
         </Stack>
       </Stack>
 
-      <ProductsFilters isLoading={isLoading} />
-
-      <Divider />
+      {!isFormMode && (
+        <>
+          <ProductsFilters isLoading={isLoading} />
+          <Divider />
+        </>
+      )}
 
       {isFormMode ? (
         <ProductForm />
@@ -85,8 +90,11 @@ export function Products() {
 
           {!isLoading && !error && products.length > 0 && (
             <>
-              <ProductsTable products={products} onDelete={removeProduct} />
-              <ProductsCharts />
+              {view === 'dashboard' ? (
+                <ProductsCharts />
+              ) : (
+                <ProductsTable products={products} onDelete={removeProduct} />
+              )}
             </>
           )}
         </>
