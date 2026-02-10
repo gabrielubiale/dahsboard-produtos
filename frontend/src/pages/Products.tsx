@@ -1,10 +1,11 @@
-import { Button, Divider, Stack, Tabs, Tab, Typography } from '@mui/material'
+import { Button, Box, Tabs, Tab } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useProductsStore } from '../store/productsStore'
 import { ProductsFilters } from '../features/products/components/ProductsFilters'
 import { ProductsTable } from '../features/products/components/ProductsTable'
 import { ProductsCharts } from '../features/products/components/ProductsCharts'
+import { StatsCards } from '../features/products/components/StatsCards'
 import { ProductForm } from '../features/products/components/ProductForm'
 import { Loader } from '../shared/components/Loader'
 import { ErrorMessage } from '../shared/components/ErrorMessage'
@@ -13,7 +14,7 @@ import { EmptyState } from '../shared/components/EmptyState'
 // Page principal de Produtos.
 // Regra: o nome do componente da page é o mesmo nome da pasta em `features` (Products <-> products).
 export function Products() {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const [view, setView] = useState<'dashboard' | 'list'>('dashboard')
 
   const { products, isLoading, error, loadProducts, removeProduct, setFilters } = useProductsStore()
@@ -34,43 +35,76 @@ export function Products() {
   }, [loadProducts, searchParams, setFilters])
 
   return (
-    <Stack spacing={4}>
-      <Typography variant="h4" component="h1">
-        Produtos
-      </Typography>
-
-      <Typography variant="body1" color="text.secondary">
-        Dashboard administrativo de gestão de produtos com gráficos para decisão, visão rápida e operação.
-      </Typography>
-
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Tabs value={view} onChange={(_, newValue) => setView(newValue)}>
-          <Tab label="Dashboard" value="dashboard" />
-          <Tab label="Lista" value="list" />
-        </Tabs>
-        <Stack direction="row" spacing={2}>
-          <Button variant="outlined" onClick={() => loadProducts()} disabled={isLoading}>
+    <Box className="space-y-6">
+      {/* Header */}
+      <Box className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+        <Box>
+          <h1 className="text-3xl font-bold text-white mb-2">Produtos</h1>
+          <p className="text-gray-400">
+            Dashboard administrativo de gestão de produtos com gráficos para decisão, visão rápida e
+            operação.
+          </p>
+        </Box>
+        <Box className="flex items-center gap-3">
+          <Button
+            variant="outlined"
+            onClick={() => loadProducts()}
+            disabled={isLoading}
+            className="border-gray-700 text-gray-300 hover:border-gray-600 hover:bg-gray-800"
+          >
             Recarregar
           </Button>
           <Button
             variant="contained"
             disabled={isLoading}
             href={isFormMode ? '/products' : '/products?mode=form'}
+            className="bg-blue-600 hover:bg-blue-700 text-white"
           >
             {isFormMode ? 'Voltar' : 'Novo produto'}
           </Button>
-        </Stack>
-      </Stack>
+        </Box>
+      </Box>
 
+      {/* Tabs */}
       {!isFormMode && (
-        <>
-          <ProductsFilters isLoading={isLoading} />
-          <Divider />
-        </>
+        <Box className="border-b border-gray-800">
+          <Tabs
+            value={view}
+            onChange={(_, newValue) => setView(newValue)}
+            className="min-h-0"
+            sx={{
+              '& .MuiTab-root': {
+                color: '#9ca3af',
+                textTransform: 'none',
+                fontWeight: 500,
+                minHeight: '48px',
+                '&.Mui-selected': {
+                  color: '#3b82f6',
+                },
+              },
+              '& .MuiTabs-indicator': {
+                backgroundColor: '#3b82f6',
+              },
+            }}
+          >
+            <Tab label="Dashboard" value="dashboard" />
+            <Tab label="Lista" value="list" />
+          </Tabs>
+        </Box>
       )}
 
+      {/* Filtros */}
+      {!isFormMode && view === 'dashboard' && (
+        <Box className="rounded-xl border border-gray-800 bg-gray-900 p-4">
+          <ProductsFilters isLoading={isLoading} />
+        </Box>
+      )}
+
+      {/* Conteúdo */}
       {isFormMode ? (
-        <ProductForm />
+        <Box className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+          <ProductForm />
+        </Box>
       ) : (
         <>
           {isLoading && <Loader />}
@@ -91,16 +125,19 @@ export function Products() {
           {!isLoading && !error && products.length > 0 && (
             <>
               {view === 'dashboard' ? (
-                <ProductsCharts />
+                <>
+                  <StatsCards />
+                  <ProductsCharts />
+                </>
               ) : (
-                <ProductsTable products={products} onDelete={removeProduct} />
+                <Box className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+                  <ProductsTable products={products} onDelete={removeProduct} />
+                </Box>
               )}
             </>
           )}
         </>
       )}
-
-    </Stack>
+    </Box>
   )
 }
-

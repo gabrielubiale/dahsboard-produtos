@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Typography } from '@mui/material'
+import { Card, CardContent, CardHeader, Typography, Box } from '@mui/material'
 import { Bar } from 'react-chartjs-2'
 import '../../../../config/chartjs'
 
@@ -28,6 +28,11 @@ export function ChartTopCategoriesByValue({ data }: ChartTopCategoriesByValuePro
         display: false,
       },
       tooltip: {
+        backgroundColor: '#1f2937',
+        titleColor: '#f9fafb',
+        bodyColor: '#d1d5db',
+        borderColor: '#374151',
+        borderWidth: 1,
         callbacks: {
           label: (context: any) => {
             const value = context.parsed.y
@@ -43,6 +48,7 @@ export function ChartTopCategoriesByValue({ data }: ChartTopCategoriesByValuePro
       y: {
         beginAtZero: true,
         ticks: {
+          color: '#9ca3af',
           callback: (value: any) => {
             return value.toLocaleString('pt-BR', {
               style: 'currency',
@@ -51,20 +57,41 @@ export function ChartTopCategoriesByValue({ data }: ChartTopCategoriesByValuePro
             })
           },
         },
+        grid: {
+          color: '#374151',
+        },
+      },
+      x: {
+        ticks: {
+          color: '#9ca3af',
+        },
+        grid: {
+          color: '#374151',
+        },
       },
     },
   }
 
   return (
-    <Card>
+    <Card className="border-gray-800 bg-gray-900 shadow-xl">
       <CardHeader
-        title={<Typography variant="h6">Top categorias por valor total em estoque</Typography>}
-        subheader="Soma de price por categoria (apenas produtos ativos) - Onde está concentrado o valor do catálogo?"
+        className="border-b border-gray-800"
+        title={
+          <Typography variant="h6" className="font-semibold text-white">
+            Top categorias por valor total em estoque
+          </Typography>
+        }
+        subheader={
+          <Typography variant="body2" className="text-gray-400">
+            Soma de price por categoria (apenas produtos ativos) - Onde está concentrado o valor do
+            catálogo?
+          </Typography>
+        }
       />
-      <CardContent>
-        <div style={{ height: '300px' }}>
+      <CardContent className="p-6">
+        <Box className="h-[300px]">
           <Bar data={chartData} options={options} />
-        </div>
+        </Box>
       </CardContent>
     </Card>
   )

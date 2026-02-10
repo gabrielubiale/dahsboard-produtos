@@ -1,5 +1,6 @@
 import {
   Badge,
+  Box,
   Card,
   CardContent,
   CardHeader,
@@ -40,41 +41,51 @@ function formatRelativeTime(dateString: string): string {
 
 export function ChartRecentUpdates({ products }: ChartRecentUpdatesProps) {
   return (
-    <Card>
+    <Card className="border-gray-800 bg-gray-900 shadow-xl">
       <CardHeader
+        className="border-b border-gray-800"
         title={
-          <Typography variant="h6">
-            Últimos produtos atualizados
-            <Badge badgeContent={products.length} color="primary" sx={{ ml: 2 }} />
+          <Box className="flex items-center gap-2">
+            <Typography variant="h6" className="font-semibold text-white">
+              Últimos produtos atualizados
+            </Typography>
+            <Badge badgeContent={products.length} color="primary" />
+          </Box>
+        }
+        subheader={
+          <Typography variant="body2" className="text-gray-400">
+            Usa updatedAt - Ajuda a identificar atividade recente (operação)
           </Typography>
         }
-        subheader="Usa updatedAt - Ajuda a identificar atividade recente (operação)"
       />
-      <CardContent>
+      <CardContent className="p-6">
         <TableContainer>
           <Table size="small">
             <TableHead>
-              <TableRow>
-                <TableCell>Nome</TableCell>
-                <TableCell>Categoria</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell align="right">Última atualização</TableCell>
+              <TableRow className="border-gray-800">
+                <TableCell className="text-gray-400 font-semibold">Nome</TableCell>
+                <TableCell className="text-gray-400 font-semibold">Categoria</TableCell>
+                <TableCell className="text-gray-400 font-semibold">Status</TableCell>
+                <TableCell align="right" className="text-gray-400 font-semibold">
+                  Última atualização
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {products.map((product) => (
-                <TableRow key={product.id} hover>
-                  <TableCell>{product.name}</TableCell>
-                  <TableCell>{product.category}</TableCell>
+                <TableRow key={product.id} hover className="border-gray-800">
+                  <TableCell className="text-white">{product.name}</TableCell>
+                  <TableCell className="text-gray-300">{product.category}</TableCell>
                   <TableCell>
                     <Chip
                       label={product.status === 'active' ? 'Ativo' : 'Inativo'}
                       color={product.status === 'active' ? 'success' : 'error'}
                       size="small"
+                      className="font-medium"
                     />
                   </TableCell>
                   <TableCell align="right">
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" className="text-gray-400">
                       {formatRelativeTime(product.updatedAt)}
                     </Typography>
                   </TableCell>

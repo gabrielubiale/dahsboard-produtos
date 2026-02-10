@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Typography } from '@mui/material'
+import { Card, CardContent, CardHeader, Typography, Box } from '@mui/material'
 import { Line } from 'react-chartjs-2'
 import '../../../../config/chartjs'
 
@@ -15,18 +15,28 @@ export function ChartStatusEvolutionOverTime({ data }: ChartStatusEvolutionOverT
         data: data.activeData,
         borderColor: '#22c55e',
         backgroundColor: 'rgba(34, 197, 94, 0.2)',
-        borderWidth: 2,
+        borderWidth: 3,
         fill: true,
         tension: 0.4,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+        pointBackgroundColor: '#22c55e',
+        pointBorderColor: '#111827',
+        pointBorderWidth: 2,
       },
       {
         label: 'Inativos',
         data: data.inactiveData,
         borderColor: '#ef4444',
         backgroundColor: 'rgba(239, 68, 68, 0.2)',
-        borderWidth: 2,
+        borderWidth: 3,
         fill: true,
         tension: 0.4,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+        pointBackgroundColor: '#ef4444',
+        pointBorderColor: '#111827',
+        pointBorderWidth: 2,
       },
     ],
   }
@@ -42,8 +52,20 @@ export function ChartStatusEvolutionOverTime({ data }: ChartStatusEvolutionOverT
       legend: {
         display: true,
         position: 'top' as const,
+        labels: {
+          color: '#d1d5db',
+          padding: 15,
+          font: {
+            size: 12,
+          },
+        },
       },
       tooltip: {
+        backgroundColor: '#1f2937',
+        titleColor: '#f9fafb',
+        bodyColor: '#d1d5db',
+        borderColor: '#374151',
+        borderWidth: 1,
         callbacks: {
           label: (context: any) => `${context.dataset.label}: ${context.parsed.y}`,
         },
@@ -52,27 +74,46 @@ export function ChartStatusEvolutionOverTime({ data }: ChartStatusEvolutionOverT
     scales: {
       x: {
         stacked: false,
+        ticks: {
+          color: '#9ca3af',
+        },
+        grid: {
+          color: '#374151',
+        },
       },
       y: {
         beginAtZero: true,
         stacked: false,
         ticks: {
           stepSize: 1,
+          color: '#9ca3af',
+        },
+        grid: {
+          color: '#374151',
         },
       },
     },
   }
 
   return (
-    <Card>
+    <Card className="border-gray-800 bg-gray-900 shadow-xl">
       <CardHeader
-        title={<Typography variant="h6">Produtos ativos vs inativos ao longo do tempo</Typography>}
-        subheader="Evolução histórica do status - Mostra se o time está desativando mais do que ativando"
+        className="border-b border-gray-800"
+        title={
+          <Typography variant="h6" className="font-semibold text-white">
+            Produtos ativos vs inativos ao longo do tempo
+          </Typography>
+        }
+        subheader={
+          <Typography variant="body2" className="text-gray-400">
+            Evolução histórica do status - Mostra se o time está desativando mais do que ativando
+          </Typography>
+        }
       />
-      <CardContent>
-        <div style={{ height: '300px' }}>
+      <CardContent className="p-6">
+        <Box className="h-[300px]">
           <Line data={chartData} options={options} />
-        </div>
+        </Box>
       </CardContent>
     </Card>
   )

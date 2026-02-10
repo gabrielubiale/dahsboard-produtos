@@ -12,7 +12,6 @@ import {
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useNavigate } from 'react-router-dom'
-import { useProductsStore } from '../../../store/productsStore'
 import type { Product } from '../../../services/types'
 
 type ProductsTableProps = {

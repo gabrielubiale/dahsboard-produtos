@@ -49,6 +49,27 @@ export function ProductsFilters({ isLoading }: ProductsFiltersProps) {
         value={search}
         onChange={(event) => updateParam('search', event.target.value)}
         disabled={isLoading}
+        className="bg-gray-800"
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            color: '#f9fafb',
+            '& fieldset': {
+              borderColor: '#374151',
+            },
+            '&:hover fieldset': {
+              borderColor: '#4b5563',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: '#3b82f6',
+            },
+          },
+          '& .MuiInputLabel-root': {
+            color: '#9ca3af',
+            '&.Mui-focused': {
+              color: '#3b82f6',
+            },
+          },
+        }}
       />
 
       <TextField
@@ -59,6 +80,27 @@ export function ProductsFilters({ isLoading }: ProductsFiltersProps) {
         value={status}
         onChange={(event) => updateParam('status', event.target.value || null)}
         disabled={isLoading}
+        className="bg-gray-800"
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            color: '#f9fafb',
+            '& fieldset': {
+              borderColor: '#374151',
+            },
+            '&:hover fieldset': {
+              borderColor: '#4b5563',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: '#3b82f6',
+            },
+          },
+          '& .MuiInputLabel-root': {
+            color: '#9ca3af',
+            '&.Mui-focused': {
+              color: '#3b82f6',
+            },
+          },
+        }}
       >
         {STATUS_OPTIONS.map((option) => (
           <MenuItem key={option.value || 'all'} value={option.value}>
@@ -67,10 +109,14 @@ export function ProductsFilters({ isLoading }: ProductsFiltersProps) {
         ))}
       </TextField>
 
-      <Button variant="outlined" onClick={handleReset} disabled={isLoading}>
+      <Button
+        variant="outlined"
+        onClick={handleReset}
+        disabled={isLoading}
+        className="border-gray-700 text-gray-300 hover:border-gray-600 hover:bg-gray-800"
+      >
         Limpar filtros
       </Button>
     </Stack>
   )
 }
-

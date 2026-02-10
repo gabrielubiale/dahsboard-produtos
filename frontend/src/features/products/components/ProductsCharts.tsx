@@ -16,51 +16,51 @@ export function ProductsCharts() {
 
   if (products.length === 0) {
     return (
-      <Typography variant="body1" color="text.secondary" align="center" py={4}>
+      <Typography variant="body1" className="py-8 text-center text-gray-400">
         Nenhum produto disponível para exibir gráficos.
       </Typography>
     )
   }
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={4}>
       {/* Gráfico 1: Total de produtos por status */}
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <ChartStatusDistribution data={chartData.getStatusDistribution} />
       </Grid>
 
       {/* Gráfico 2: Produtos por categoria */}
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <ChartProductsByCategory data={chartData.getProductsByCategory} />
       </Grid>
 
       {/* Gráfico 3: Evolução de produtos criados no tempo */}
-      <Grid item xs={12}>
+      <Grid size={{ xs: 12 }}>
         <ChartEvolutionOverTime data={chartData.getEvolutionOverTime} />
       </Grid>
 
       {/* Gráfico 4: Preço médio por categoria */}
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <ChartAveragePriceByCategory data={chartData.getAveragePriceByCategory} />
       </Grid>
 
       {/* Gráfico 5: Distribuição de preços */}
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <ChartPriceDistribution data={chartData.getPriceDistribution} />
       </Grid>
 
       {/* Gráfico 6: Produtos ativos vs inativos ao longo do tempo */}
-      <Grid item xs={12}>
+      <Grid size={{ xs: 12 }}>
         <ChartStatusEvolutionOverTime data={chartData.getStatusEvolutionOverTime} />
       </Grid>
 
       {/* Gráfico 7: Últimos produtos atualizados */}
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <ChartRecentUpdates products={chartData.getRecentUpdates} />
       </Grid>
 
       {/* Gráfico 8: Top categorias por valor total */}
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <ChartTopCategoriesByValue data={chartData.getTopCategoriesByValue} />
       </Grid>
     </Grid>

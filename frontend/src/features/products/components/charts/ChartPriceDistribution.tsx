@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Typography } from '@mui/material'
+import { Card, CardContent, CardHeader, Typography, Box } from '@mui/material'
 import { Bar } from 'react-chartjs-2'
 import '../../../../config/chartjs'
 
@@ -28,6 +28,11 @@ export function ChartPriceDistribution({ data }: ChartPriceDistributionProps) {
         display: false,
       },
       tooltip: {
+        backgroundColor: '#1f2937',
+        titleColor: '#f9fafb',
+        bodyColor: '#d1d5db',
+        borderColor: '#374151',
+        borderWidth: 1,
         callbacks: {
           label: (context: any) => `Produtos: ${context.parsed.y}`,
         },
@@ -38,21 +43,42 @@ export function ChartPriceDistribution({ data }: ChartPriceDistributionProps) {
         beginAtZero: true,
         ticks: {
           stepSize: 1,
+          color: '#9ca3af',
+        },
+        grid: {
+          color: '#374151',
+        },
+      },
+      x: {
+        ticks: {
+          color: '#9ca3af',
+        },
+        grid: {
+          color: '#374151',
         },
       },
     },
   }
 
   return (
-    <Card>
+    <Card className="border-gray-800 bg-gray-900 shadow-xl">
       <CardHeader
-        title={<Typography variant="h6">Distribuição de preços</Typography>}
-        subheader="Faixas de preço - Identifica produtos fora do padrão (outliers)"
+        className="border-b border-gray-800"
+        title={
+          <Typography variant="h6" className="font-semibold text-white">
+            Distribuição de preços
+          </Typography>
+        }
+        subheader={
+          <Typography variant="body2" className="text-gray-400">
+            Faixas de preço - Identifica produtos fora do padrão (outliers)
+          </Typography>
+        }
       />
-      <CardContent>
-        <div style={{ height: '300px' }}>
+      <CardContent className="p-6">
+        <Box className="h-[300px]">
           <Bar data={chartData} options={options} />
-        </div>
+        </Box>
       </CardContent>
     </Card>
   )
