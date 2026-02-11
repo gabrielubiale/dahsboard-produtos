@@ -5,7 +5,7 @@ import { useSalesStore } from '../store/salesStore'
 import { ProductsFilters } from '../features/products/components/ProductsFilters'
 import { ProductsTable } from '../features/products/components/ProductsTable'
 import { ProductsCharts } from '../features/products/components/ProductsCharts'
-import { StatsCards } from '../features/products/components/StatsCards'
+import { StatsCardsProductsDashboard } from '../features/products/components/StatsCards'
 import { ProductForm } from '../features/products/components/ProductForm'
 import { Loader } from '../shared/components/Loader'
 import { ErrorMessage } from '../shared/components/ErrorMessage'
@@ -103,7 +103,7 @@ export function Products() {
             <>
               {view === 'dashboard' ? (
                 <>
-                  <StatsCards />
+                  <StatsCardsProductsDashboard />
                   <hr className="my-8 border-gray-800" />
                   <ProductsCharts />
                 </>
