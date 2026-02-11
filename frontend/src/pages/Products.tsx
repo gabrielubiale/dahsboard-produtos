@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useProductsStore } from '../store/productsStore'
+import { useSalesStore } from '../store/salesStore'
 import { ProductsFilters } from '../features/products/components/ProductsFilters'
 import { ProductsTable } from '../features/products/components/ProductsTable'
 import { ProductsCharts } from '../features/products/components/ProductsCharts'
@@ -18,6 +19,7 @@ export function Products() {
   const [view, setView] = useState<'dashboard' | 'list'>('dashboard')
 
   const { products, isLoading, error, loadProducts, removeProduct, setFilters } = useProductsStore()
+  const { loadSales } = useSalesStore()
 
   const isFormMode = Boolean(searchParams.get('mode') === 'form')
 
@@ -31,7 +33,8 @@ export function Products() {
     })
 
     void loadProducts()
-  }, [loadProducts, searchParams, setFilters])
+    void loadSales()
+  }, [loadProducts, loadSales, searchParams, setFilters])
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">

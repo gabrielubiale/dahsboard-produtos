@@ -1,5 +1,13 @@
 export type ProductStatus = 'active' | 'inactive'
 
+export type Sale = {
+  id: string
+  produtoId: string
+  data: string
+  quantidade: number
+  valorTotal: number
+}
+
 export type Product = {
   id: string
   name: string

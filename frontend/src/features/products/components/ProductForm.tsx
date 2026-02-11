@@ -8,6 +8,13 @@ const STATUS_OPTIONS: { value: ProductStatus; label: string }[] = [
   { value: 'inactive', label: 'Indisponível' },
 ]
 
+const CATEGORY_OPTIONS = [
+  { value: 'Hardware', label: 'Hardware' },
+  { value: 'Software', label: 'Software' },
+  { value: 'Acessórios', label: 'Acessórios' },
+  { value: 'Mobile', label: 'Mobile' },
+]
+
 export function ProductForm() {
   const navigate = useNavigate()
   const params = useParams()
@@ -92,16 +99,21 @@ export function ProductForm() {
         <label className="block text-sm font-medium text-gray-400 mb-1">
           Categoria
         </label>
-        <input
+        <select
           name="category"
-          type="text"
           defaultValue={defaultCategory}
           required
           disabled={isLoading}
-          className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500
+          className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white
             focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
             disabled:opacity-50 disabled:cursor-not-allowed"
-        />
+        >
+          {CATEGORY_OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value} className="bg-gray-800">
+              {opt.label}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div>

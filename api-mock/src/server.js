@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const productsRoutes = require('./routes/products')
+const salesRoutes = require('./routes/sales')
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/products', productsRoutes)
+app.use('/sales', salesRoutes)
 
 app.use((err, req, res, next) => {
   // eslint-disable-next-line no-console

@@ -1,66 +1,53 @@
 import { useProductsStore } from '../../../store/productsStore'
+import { useSalesStore } from '../../../store/salesStore'
 import { useChartData } from '../hooks/useChartData'
-import { ChartStatusDistribution } from './charts/ChartStatusDistribution'
-import { ChartProductsByCategory } from './charts/ChartProductsByCategory'
-import { ChartEvolutionOverTime } from './charts/ChartEvolutionOverTime'
-import { ChartAveragePriceByCategory } from './charts/ChartAveragePriceByCategory'
-import { ChartPriceDistribution } from './charts/ChartPriceDistribution'
-import { ChartStatusEvolutionOverTime } from './charts/ChartStatusEvolutionOverTime'
-import { ChartRecentUpdates } from './charts/ChartRecentUpdates'
-import { ChartTopCategoriesByValue } from './charts/ChartTopCategoriesByValue'
+import { ChartProductsMostSoldByQuantity } from './charts/ChartProductsMostSoldByQuantity'
+import { ChartProductsMostRevenue } from './charts/ChartProductsMostRevenue'
+import { ChartRevenueByMonth } from './charts/ChartRevenueByMonth'
+import { ChartSalesCountByMonth } from './charts/ChartSalesCountByMonth'
+import { ChartRevenueShareByProduct } from './charts/ChartRevenueShareByProduct'
+import { ChartAverageTicketByMonth } from './charts/ChartAverageTicketByMonth'
+import { ChartTop5QuantityVsRevenue } from './charts/ChartTop5QuantityVsRevenue'
+import { ChartSalesByCategory } from './charts/ChartSalesByCategory'
 
 export function ProductsCharts() {
   const products = useProductsStore((state) => state.products)
-  const chartData = useChartData(products)
+  const sales = useSalesStore((state) => state.sales)
+  const chartData = useChartData(products, sales)
 
-  if (products.length === 0) {
+  if (products.length === 0 && sales.length === 0) {
     return (
       <p className="py-8 text-center text-gray-400">
-        Nenhum produto disponível para exibir gráficos.
+        Nenhum dado disponível para exibir gráficos.
       </p>
     )
   }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {/* Gráfico 1: Total de produtos por status */}
-      <div id="chart-status-distribution">
-        <ChartStatusDistribution data={chartData.getStatusDistribution} />
+      <div id="chart-products-most-sold">
+        <ChartProductsMostSoldByQuantity data={chartData.getProductsMostSoldByQuantity} />
       </div>
-
-      {/* Gráfico 2: Produtos por categoria */}
-      <div id="chart-products-by-category">
-        <ChartProductsByCategory data={chartData.getProductsByCategory} />
+      <div id="chart-products-most-revenue">
+        <ChartProductsMostRevenue data={chartData.getProductsMostRevenue} />
       </div>
-
-      {/* Gráfico 3: Evolução de produtos criados no tempo */}
-      <div className="md:col-span-2" id="chart-evolution-over-time">
-        <ChartEvolutionOverTime data={chartData.getEvolutionOverTime} />
+      <div id="chart-revenue-by-month">
+        <ChartRevenueByMonth data={chartData.getRevenueByMonth} />
       </div>
-
-      {/* Gráfico 4: Preço médio por categoria */}
-      <div id="chart-average-price-by-category">
-        <ChartAveragePriceByCategory data={chartData.getAveragePriceByCategory} />
+      <div id="chart-sales-count-by-month">
+        <ChartSalesCountByMonth data={chartData.getSalesCountByMonth} />
       </div>
-
-      {/* Gráfico 5: Distribuição de preços */}
-      <div id="chart-price-distribution">
-        <ChartPriceDistribution data={chartData.getPriceDistribution} />
+      <div id="chart-revenue-share">
+        <ChartRevenueShareByProduct data={chartData.getRevenueShareByProduct} />
       </div>
-
-      {/* Gráfico 6: Produtos disponíveis vs indisponíveis ao longo do tempo */}
-      <div className="md:col-span-2" id="chart-status-evolution-over-time">
-        <ChartStatusEvolutionOverTime data={chartData.getStatusEvolutionOverTime} />
+      <div id="chart-average-ticket">
+        <ChartAverageTicketByMonth data={chartData.getAverageTicketByMonth} />
       </div>
-
-      {/* Gráfico 7: Últimos produtos atualizados */}
-      <div id="chart-recent-updates">
-        <ChartRecentUpdates products={chartData.getRecentUpdates} />
+      <div className="md:col-span-2" id="chart-top5-quantity-vs-revenue">
+        <ChartTop5QuantityVsRevenue data={chartData.getTop5QuantityVsRevenue} />
       </div>
-
-      {/* Gráfico 8: Top categorias por valor total */}
-      <div id="chart-top-categories-by-value">
-        <ChartTopCategoriesByValue data={chartData.getTopCategoriesByValue} />
+      <div id="chart-sales-by-category">
+        <ChartSalesByCategory data={chartData.getSalesByCategory} />
       </div>
     </div>
   )

@@ -1,13 +1,11 @@
-import { 
-  SquaresFour, 
-  ChartPie, 
-  ChartBar, 
-  ChartLine, 
-  CurrencyDollar, 
-  ChartBarHorizontal, 
-  Clock, 
-  ClockClockwise, 
-  TrendUp 
+import {
+  SquaresFour,
+  ChartPie,
+  ChartBar,
+  ChartLine,
+  CurrencyDollar,
+  ChartBarHorizontal,
+  TrendUp,
 } from 'phosphor-react'
 import type { MenuItem } from './types'
 
@@ -21,44 +19,44 @@ export const menuItems: MenuItem[] = [
     icon: <SquaresFour size={ICON_SIZE_ITEM} />,
     subItems: [
       {
-        label: 'Produtos por status',
-        anchor: '#chart-status-distribution',
-        icon: <ChartPie size={ICON_SIZE_SUBITEM} />,
-      },
-      {
-        label: 'Produtos por categoria',
-        anchor: '#chart-products-by-category',
+        label: 'Produtos mais vendidos',
+        anchor: '#chart-products-most-sold',
         icon: <ChartBar size={ICON_SIZE_SUBITEM} />,
       },
       {
-        label: 'Produtos criados',
-        anchor: '#chart-evolution-over-time',
-        icon: <ChartLine size={ICON_SIZE_SUBITEM} />,
-      },
-      {
-        label: 'Preço médio por categoria',
-        anchor: '#chart-average-price-by-category',
+        label: 'Produtos que mais faturaram',
+        anchor: '#chart-products-most-revenue',
         icon: <CurrencyDollar size={ICON_SIZE_SUBITEM} />,
       },
       {
-        label: 'Distribuição de preços',
-        anchor: '#chart-price-distribution',
+        label: 'Faturamento por mês',
+        anchor: '#chart-revenue-by-month',
+        icon: <ChartLine size={ICON_SIZE_SUBITEM} />,
+      },
+      {
+        label: 'Vendas por mês',
+        anchor: '#chart-sales-count-by-month',
         icon: <ChartBarHorizontal size={ICON_SIZE_SUBITEM} />,
       },
       {
-        label: 'Disponíveis vs indisponíveis pelo tempo',
-        anchor: '#chart-status-evolution-over-time',
-        icon: <Clock size={ICON_SIZE_SUBITEM} />,
+        label: 'Participação no faturamento',
+        anchor: '#chart-revenue-share',
+        icon: <ChartPie size={ICON_SIZE_SUBITEM} />,
       },
       {
-        label: 'Últimos produtos atualizados',
-        anchor: '#chart-recent-updates',
-        icon: <ClockClockwise size={ICON_SIZE_SUBITEM} />,
+        label: 'Ticket médio por mês',
+        anchor: '#chart-average-ticket',
+        icon: <ChartLine size={ICON_SIZE_SUBITEM} />,
       },
       {
-        label: 'Categorias por valor em estoque',
-        anchor: '#chart-top-categories-by-value',
+        label: 'Top 5: Quantidade vs Faturamento',
+        anchor: '#chart-top5-quantity-vs-revenue',
         icon: <TrendUp size={ICON_SIZE_SUBITEM} />,
+      },
+      {
+        label: 'Vendas por categoria',
+        anchor: '#chart-sales-by-category',
+        icon: <ChartPie size={ICON_SIZE_SUBITEM} />,
       },
     ],
   },
