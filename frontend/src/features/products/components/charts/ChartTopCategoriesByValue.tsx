@@ -78,7 +78,7 @@ export function ChartTopCategoriesByValue({ data }: ChartTopCategoriesByValuePro
           Top categorias por valor total em estoque
         </h6>
         <p className="text-gray-400 text-sm">
-          Soma de price por categoria (apenas produtos ativos) - Onde está concentrado o valor do catálogo?
+          Soma de price por categoria (apenas produtos disponíveis) - Onde está concentrado o valor do catálogo?
         </p>
       </div>
       <div className="p-6">

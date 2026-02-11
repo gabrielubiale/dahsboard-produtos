@@ -61,7 +61,7 @@ export function ProductsTable({ products, onDelete }: ProductsTableProps) {
                       }
                     `}
                   >
-                    {product.status === 'active' ? 'Ativo' : 'Inativo'}
+                    {product.status === 'active' ? 'Disponível' : 'Indisponível'}
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right">

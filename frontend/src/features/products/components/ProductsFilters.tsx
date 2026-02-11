@@ -8,8 +8,8 @@ type StatusOption = {
 
 const STATUS_OPTIONS: StatusOption[] = [
   { value: '', label: 'Todos' },
-  { value: 'active', label: 'Ativos' },
-  { value: 'inactive', label: 'Inativos' },
+  { value: 'active', label: 'Disponíveis' },
+  { value: 'inactive', label: 'Indisponíveis' },
 ]
 
 type ProductsFiltersProps = {

@@ -9,6 +9,9 @@ import { ProductForm } from '../features/products/components/ProductForm'
 import { Loader } from '../shared/components/Loader'
 import { ErrorMessage } from '../shared/components/ErrorMessage'
 import { EmptyState } from '../shared/components/EmptyState'
+import { PageTitle } from '../shared/components/PageTitle'
+import { Tab } from '../shared/components/Tab'
+import { TabsContainer } from '../shared/components/TabsContainer'
 
 export function Products() {
   const [searchParams] = useSearchParams()
@@ -34,71 +37,44 @@ export function Products() {
     <div className="space-y-6 animate-in fade-in duration-500">
       {/* Header Compacto */}
       {!isFormMode && (
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="mb-2 text-3xl font-bold text-white">Produtos</h1>
-            <p className="text-sm text-gray-400">
-              Gerencie seu catálogo de produtos com visualizações e análises em tempo real
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => loadProducts()}
-              disabled={isLoading}
-              className="border border-gray-700 text-gray-300 px-4 py-2 rounded-lg transition-all hover:border-gray-600 hover:bg-gray-800/50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Recarregar
-            </button>
+        <PageTitle
+          title="Produtos"
+          description="Gerenciamento de produtos e visão estratégica de vendas."
+          action={
             <a
               href={isFormMode ? '/products' : '/products?mode=form'}
               className="bg-linear-to-r from-blue-600 to-blue-700 text-white shadow-lg px-4 py-2 rounded-lg transition-all hover:from-blue-700 hover:to-blue-800 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isFormMode ? 'Voltar' : 'Novo produto'}
             </a>
-          </div>
-        </div>
+          }
+        />
       )}
 
-      {/* Tabs Elegantes */}
+      {/* tabs */}
       {!isFormMode && (
-        <div className="border-b border-gray-800">
-          <div className="flex">
-            <button
-              onClick={() => setView('dashboard')}
-              className={`
-                px-6 py-3 text-sm font-medium transition-all
-                ${view === 'dashboard'
-                  ? 'text-blue-400 border-b-2 border-blue-400'
-                  : 'text-gray-400 hover:text-gray-300'
-                }
-              `}
-            >
-              Dashboard
-            </button>
-            <button
-              onClick={() => setView('list')}
-              className={`
-                px-6 py-3 text-sm font-medium transition-all
-                ${view === 'list'
-                  ? 'text-blue-400 border-b-2 border-blue-400'
-                  : 'text-gray-400 hover:text-gray-300'
-                }
-              `}
-            >
-              Lista
-            </button>
-          </div>
-        </div>
+        <TabsContainer>
+          <Tab
+            label="Dashboard"
+            isActive={view === 'dashboard'}
+            onClick={() => setView('dashboard')}
+          />
+          <Tab
+            label="Lista"
+            isActive={view === 'list'}
+            onClick={() => setView('list')}
+          />
+        </TabsContainer>
       )}
 
       {/* Filtros Integrados */}
-      {!isFormMode && view === 'dashboard' && (
+      {!isFormMode && view === 'list' && (
         <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-4 backdrop-blur-sm">
           <ProductsFilters isLoading={isLoading} />
         </div>
       )}
 
-      {/* Conteúdo */}
+      {/* conteúdo */}
       {isFormMode ? (
         <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-6 backdrop-blur-sm shadow-xl">
           <ProductForm />

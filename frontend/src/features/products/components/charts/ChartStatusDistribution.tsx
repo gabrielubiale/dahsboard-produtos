@@ -56,7 +56,7 @@ export function ChartStatusDistribution({ data }: ChartStatusDistributionProps) 
           Total de produtos por status
         </h6>
         <p className="text-gray-400 text-sm">
-          Active vs Inactive - Pergunta: meu catálogo está saudável?
+          Disponíveis vs Indisponíveis - Pergunta: meu catálogo está saudável?
         </p>
       </div>
       <div className="p-6">

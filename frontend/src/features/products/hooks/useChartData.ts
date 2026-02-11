@@ -7,7 +7,7 @@ export function useChartData(products: Product[]) {
     const active = products.filter((p) => p.status === 'active').length
     const inactive = products.filter((p) => p.status === 'inactive').length
     return {
-      labels: ['Ativos', 'Inativos'],
+      labels: ['Disponíveis', 'Indisponíveis'],
       data: [active, inactive],
     }
   }, [products])

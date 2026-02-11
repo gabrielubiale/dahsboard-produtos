@@ -48,7 +48,7 @@ export function ProductsCharts() {
         <ChartPriceDistribution data={chartData.getPriceDistribution} />
       </div>
 
-      {/* Gráfico 6: Produtos ativos vs inativos ao longo do tempo */}
+      {/* Gráfico 6: Produtos disponíveis vs indisponíveis ao longo do tempo */}
       <div className="md:col-span-2" id="chart-status-evolution-over-time">
         <ChartStatusEvolutionOverTime data={chartData.getStatusEvolutionOverTime} />
       </div>

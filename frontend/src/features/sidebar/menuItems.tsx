@@ -46,7 +46,7 @@ export const menuItems: MenuItem[] = [
         icon: <ChartBarHorizontal size={ICON_SIZE_SUBITEM} />,
       },
       {
-        label: 'Ativos vs inativos pelo tempo',
+        label: 'Disponíveis vs indisponíveis pelo tempo',
         anchor: '#chart-status-evolution-over-time',
         icon: <Clock size={ICON_SIZE_SUBITEM} />,
       },

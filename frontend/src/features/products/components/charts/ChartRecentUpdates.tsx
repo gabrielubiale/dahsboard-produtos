@@ -64,7 +64,7 @@ export function ChartRecentUpdates({ products }: ChartRecentUpdatesProps) {
                         : 'bg-red-500/20 text-red-400 border border-red-500/30'
                       }
                     `}>
-                      {product.status === 'active' ? 'Ativo' : 'Inativo'}
+                      {product.status === 'active' ? 'Disponível' : 'Indisponível'}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-right">

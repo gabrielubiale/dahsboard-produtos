@@ -10,7 +10,7 @@ export function ChartStatusEvolutionOverTime({ data }: ChartStatusEvolutionOverT
     labels: data.labels,
     datasets: [
       {
-        label: 'Ativos',
+        label: 'Disponíveis',
         data: data.activeData,
         borderColor: '#22c55e',
         backgroundColor: 'rgba(34, 197, 94, 0.2)',
@@ -98,10 +98,10 @@ export function ChartStatusEvolutionOverTime({ data }: ChartStatusEvolutionOverT
     <div className="overflow-hidden rounded-2xl border border-gray-800 bg-gradient-to-br from-gray-900/90 to-gray-800/90 shadow-xl backdrop-blur-sm transition-all duration-300 hover:border-gray-700 hover:shadow-2xl">
       <div className="border-b border-gray-800/50 bg-gray-900/50 px-6 py-4">
         <h6 className="font-semibold text-white text-lg mb-1">
-          Produtos ativos vs inativos ao longo do tempo
+          Produtos disponíveis vs indisponíveis ao longo do tempo
         </h6>
         <p className="text-gray-400 text-sm">
-          Evolução histórica do status - Mostra se o time está desativando mais do que ativando
+          Evolução histórica do status - Mostra se o time está tornando mais produtos indisponíveis do que disponíveis
         </p>
       </div>
       <div className="p-6">

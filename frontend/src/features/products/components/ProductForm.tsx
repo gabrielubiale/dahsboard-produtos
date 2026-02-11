@@ -4,8 +4,8 @@ import type { ProductStatus } from '../../../services/types'
 import { useProductsStore } from '../../../store/productsStore'
 
 const STATUS_OPTIONS: { value: ProductStatus; label: string }[] = [
-  { value: 'active', label: 'Ativo' },
-  { value: 'inactive', label: 'Inativo' },
+  { value: 'active', label: 'Disponível' },
+  { value: 'inactive', label: 'Indisponível' },
 ]
 
 export function ProductForm() {
