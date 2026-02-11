@@ -1,5 +1,3 @@
-import { Box, Button, Stack, Typography } from '@mui/material'
-
 type EmptyStateProps = {
   title: string
   description?: string
@@ -9,33 +7,25 @@ type EmptyStateProps = {
 
 export function EmptyState({ title, description, actionLabel, onAction }: EmptyStateProps) {
   return (
-    <Box
-      py={12}
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      textAlign="center"
-      className="rounded-xl border border-gray-800 bg-gray-900"
-    >
-      <Stack spacing={3}>
-        <Typography variant="h6" className="text-white font-semibold">
+    <div className="py-12 flex justify-center items-center text-center rounded-xl border border-gray-800 bg-gray-900">
+      <div className="space-y-3">
+        <h6 className="text-white font-semibold text-lg">
           {title}
-        </Typography>
+        </h6>
         {description && (
-          <Typography variant="body2" className="text-gray-400">
+          <p className="text-gray-400 text-sm">
             {description}
-          </Typography>
+          </p>
         )}
         {actionLabel && onAction && (
-          <Button
-            variant="contained"
+          <button
             onClick={onAction}
-            className="bg-blue-600 hover:bg-blue-700 text-white"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
             {actionLabel}
-          </Button>
+          </button>
         )}
-      </Stack>
-    </Box>
+      </div>
+    </div>
   )
 }

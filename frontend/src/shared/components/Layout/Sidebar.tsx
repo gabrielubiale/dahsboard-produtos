@@ -1,113 +1,138 @@
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material'
-import { useLocation, useNavigate } from 'react-router-dom'
-import DashboardIcon from '@mui/icons-material/Dashboard'
-import InventoryIcon from '@mui/icons-material/Inventory'
-import { useState } from 'react'
-
-type MenuItem = {
-  label: string
-  path: string
-  icon: React.ReactNode
-}
-
-const menuItems: MenuItem[] = [
-  {
-    label: 'Dashboard',
-    path: '/products',
-    icon: <DashboardIcon />,
-  },
-  {
-    label: 'Produtos',
-    path: '/products',
-    icon: <InventoryIcon />,
-  },
-]
-
-type SidebarProps = {
-  isOpen?: boolean
-  onClose?: () => void
-}
+import { useLocation } from 'react-router-dom'
+import { CaretUp, CaretDown } from 'phosphor-react'
+import { useState, useEffect } from 'react'
+import { menuItems } from '../../../features/sidebar/menuItems'
+import type { SidebarProps } from '../../../features/sidebar/types'
 
 export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
   const location = useLocation()
-  const navigate = useNavigate()
+  const [openSubMenus, setOpenSubMenus] = useState<{ [key: string]: boolean }>({
+    Dashboard: true,
+  })
+  const [activeAnchor, setActiveAnchor] = useState<string>('')
 
-  const handleNavigation = (path: string) => {
-    navigate(path)
+  useEffect(() => {
+    setActiveAnchor(window.location.hash || '')
+    
+    const handleHashChange = () => {
+      setActiveAnchor(window.location.hash || '')
+    }
+    
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [location])
+
+  const handleNavigation = (path: string, anchor?: string) => {
+    if (path !== location.pathname) {
+      window.location.href = path + (anchor || '')
+    } else if (anchor) {
+      const element = document.querySelector(anchor)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        window.history.pushState(null, '', anchor)
+        setActiveAnchor(anchor)
+      }
+    }
     if (onClose) {
       onClose()
     }
   }
 
+  const handleToggleSubMenu = (label: string) => {
+    setOpenSubMenus((prev) => ({
+      ...prev,
+      [label]: !prev[label],
+    }))
+  }
+
   return (
-    <Box
-      className={`
-        fixed left-0 top-0 z-40 h-screen w-64 transform
-        border-r border-gray-800 bg-gradient-to-b from-gray-900 to-gray-950
-        shadow-2xl transition-all duration-300 ease-in-out
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+    <div
+      className={`fixed left-0 top-0 z-40 h-screen w-70 transform border-r border-gray-800 bg-linear-to-b from-gray-900
+        to-gray-950 shadow-2xl transition-all ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         lg:translate-x-0
       `}
     >
-      {/* Logo/Título */}
-      <Box className="flex h-16 items-center border-b border-gray-800 px-6">
-        <Typography
-          variant="h6"
-          className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text font-bold text-transparent"
-        >
+      {/* título */}
+      <div className="w-full flex h-14 items-center justify-center border-b border-gray-800 px-4">
+        <h6 className="bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text font-bold text-transparent text-sm">
           Dashboard
-        </Typography>
-      </Box>
+        </h6>
+      </div>
 
-      {/* Menu de Navegação */}
-      <Box className="mt-4 px-3">
-        <List className="space-y-1">
+      {/* item */}
+      <div className="mt-3 px-2">
+        <ul className="space-y-2">
           {menuItems.map((item) => {
-            const isActive = location.pathname === item.path || location.pathname.startsWith(item.path)
+            const hasSubItems = item.subItems && item.subItems.length > 0
+            const isSubMenuOpen = openSubMenus[item.label] || false
+            const hasActiveSubItem = hasSubItems && item.subItems?.some(subItem => activeAnchor === subItem.anchor)
+            const isActive = (location.pathname === item.path || location.pathname.startsWith(item.path)) && !hasActiveSubItem
+
             return (
-              <ListItem key={item.path} disablePadding className="mb-1">
-                <ListItemButton
-                  onClick={() => handleNavigation(item.path)}
-                  className={`
-                    rounded-lg transition-all duration-200
+              <li key={item.path}>
+                <button
+                  onClick={() => {
+                    if (hasSubItems) {
+                      handleToggleSubMenu(item.label)
+                    } else {
+                      handleNavigation(item.path)
+                    }
+                  }}
+                  className={`w-full cursor-pointer rounded-lg transition-all flex items-center px-3 py-2
                     ${isActive
-                      ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 text-blue-400 shadow-lg'
+                      ? 'bg-linear-to-r from-blue-600/20 to-purple-600/20 text-blue-400 shadow-lg'
                       : 'text-gray-400 hover:bg-gray-800/50 hover:text-white'
                     }
                   `}
-                  sx={{
-                    '&:hover': {
-                      transform: 'translateX(4px)',
-                    },
-                  }}
                 >
-                  <ListItemIcon
-                    className={`
-                      min-w-[40px] transition-colors
-                      ${isActive ? 'text-blue-400' : 'text-gray-500'}
-                    `}
-                  >
+                  <div className={`min-w-0 mr-3 transition-colors flex items-center ${isActive ? 'text-blue-400' : 'text-gray-500'}`}>
                     {item.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.label}
-                    primaryTypographyProps={{
-                      className: `font-medium ${isActive ? 'text-white' : 'text-gray-300'}`,
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
+                  </div>
+                  <span className={`font-medium text-lg flex-1 text-left ${isActive ? 'text-white' : 'text-gray-300'}`}>
+                    {item.label}
+                  </span>
+                  {hasSubItems && (
+                    <div className="text-gray-500">
+                      {isSubMenuOpen ? <CaretUp size={20} /> : <CaretDown size={20} />}
+                    </div>
+                  )}
+                </button>
+
+                {/* subitens */}
+                {hasSubItems && (
+                  <div className={`overflow-hidden transition-all duration-150 ease-in-out ${isSubMenuOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                    <ul className="ml-8 mt-1">
+                      {item.subItems?.map((subItem) => {
+                        const isSubActive = activeAnchor === subItem.anchor
+                        return (
+                          <li key={subItem.anchor} className="mb-1">
+                            <button
+                              onClick={() => handleNavigation(item.path, subItem.anchor)}
+                              className={`w-full cursor-pointer rounded-lg transition-all flex items-center px-3 py-2
+                                ${isSubActive
+                                  ? 'bg-linear-to-r from-blue-600/20 to-purple-600/20 text-blue-400 shadow-lg'
+                                  : 'text-gray-400 hover:bg-gray-800/50 hover:text-white'
+                                }
+                              `}
+                            >
+                              <div className={`min-w-0 mr-3 transition-colors flex items-center ${isSubActive ? 'text-blue-400' : 'text-gray-500'}`}>
+                                {subItem.icon}
+                              </div>
+                              <span className={`text-base flex-1 text-left ${isSubActive ? 'text-white' : 'text-gray-300'}`}>
+                                {subItem.label}
+                              </span>
+                            </button>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </div>
+                )}
+              </li>
             )
           })}
-        </List>
-      </Box>
-
-      {/* Footer da Sidebar */}
-      <Box className="absolute bottom-0 left-0 right-0 border-t border-gray-800 p-4">
-        <Typography variant="caption" className="text-gray-500">
-          v1.0.0
-        </Typography>
-      </Box>
-    </Box>
+        </ul>
+      </div>
+    </div>
   )
 }

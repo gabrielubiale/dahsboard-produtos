@@ -1,4 +1,3 @@
-import { Grid, Typography } from '@mui/material'
 import { useProductsStore } from '../../../store/productsStore'
 import { useChartData } from '../hooks/useChartData'
 import { ChartStatusDistribution } from './charts/ChartStatusDistribution'
@@ -16,53 +15,53 @@ export function ProductsCharts() {
 
   if (products.length === 0) {
     return (
-      <Typography variant="body1" className="py-8 text-center text-gray-400">
+      <p className="py-8 text-center text-gray-400">
         Nenhum produto disponível para exibir gráficos.
-      </Typography>
+      </p>
     )
   }
 
   return (
-    <Grid container spacing={4}>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {/* Gráfico 1: Total de produtos por status */}
-      <Grid size={{ xs: 12, md: 6 }}>
+      <div id="chart-status-distribution">
         <ChartStatusDistribution data={chartData.getStatusDistribution} />
-      </Grid>
+      </div>
 
       {/* Gráfico 2: Produtos por categoria */}
-      <Grid size={{ xs: 12, md: 6 }}>
+      <div id="chart-products-by-category">
         <ChartProductsByCategory data={chartData.getProductsByCategory} />
-      </Grid>
+      </div>
 
       {/* Gráfico 3: Evolução de produtos criados no tempo */}
-      <Grid size={{ xs: 12 }}>
+      <div className="md:col-span-2" id="chart-evolution-over-time">
         <ChartEvolutionOverTime data={chartData.getEvolutionOverTime} />
-      </Grid>
+      </div>
 
       {/* Gráfico 4: Preço médio por categoria */}
-      <Grid size={{ xs: 12, md: 6 }}>
+      <div id="chart-average-price-by-category">
         <ChartAveragePriceByCategory data={chartData.getAveragePriceByCategory} />
-      </Grid>
+      </div>
 
       {/* Gráfico 5: Distribuição de preços */}
-      <Grid size={{ xs: 12, md: 6 }}>
+      <div id="chart-price-distribution">
         <ChartPriceDistribution data={chartData.getPriceDistribution} />
-      </Grid>
+      </div>
 
       {/* Gráfico 6: Produtos ativos vs inativos ao longo do tempo */}
-      <Grid size={{ xs: 12 }}>
+      <div className="md:col-span-2" id="chart-status-evolution-over-time">
         <ChartStatusEvolutionOverTime data={chartData.getStatusEvolutionOverTime} />
-      </Grid>
+      </div>
 
       {/* Gráfico 7: Últimos produtos atualizados */}
-      <Grid size={{ xs: 12, md: 6 }}>
+      <div id="chart-recent-updates">
         <ChartRecentUpdates products={chartData.getRecentUpdates} />
-      </Grid>
+      </div>
 
       {/* Gráfico 8: Top categorias por valor total */}
-      <Grid size={{ xs: 12, md: 6 }}>
+      <div id="chart-top-categories-by-value">
         <ChartTopCategoriesByValue data={chartData.getTopCategoriesByValue} />
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   )
 }

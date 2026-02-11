@@ -1,4 +1,3 @@
-import { Button, MenuItem, Stack, TextField } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
 import type { ProductStatus } from '../../../services/types'
 
@@ -41,82 +40,52 @@ export function ProductsFilters({ isLoading }: ProductsFiltersProps) {
   }
 
   return (
-    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-      <TextField
-        fullWidth
-        size="small"
-        label="Buscar por nome"
-        value={search}
-        onChange={(event) => updateParam('search', event.target.value)}
-        disabled={isLoading}
-        className="bg-gray-800"
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            color: '#f9fafb',
-            '& fieldset': {
-              borderColor: '#374151',
-            },
-            '&:hover fieldset': {
-              borderColor: '#4b5563',
-            },
-            '&.Mui-focused fieldset': {
-              borderColor: '#3b82f6',
-            },
-          },
-          '& .MuiInputLabel-root': {
-            color: '#9ca3af',
-            '&.Mui-focused': {
-              color: '#3b82f6',
-            },
-          },
-        }}
-      />
+    <div className="flex flex-col sm:flex-row gap-2">
+      <div className="flex-1">
+        <label className="block text-sm font-medium text-gray-400 mb-1">
+          Buscar por nome
+        </label>
+        <input
+          type="text"
+          value={search}
+          onChange={(event) => updateParam('search', event.target.value)}
+          disabled={isLoading}
+          className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500
+            focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+            disabled:opacity-50 disabled:cursor-not-allowed"
+          placeholder="Digite o nome do produto..."
+        />
+      </div>
 
-      <TextField
-        select
-        fullWidth
-        size="small"
-        label="Status"
-        value={status}
-        onChange={(event) => updateParam('status', event.target.value || null)}
-        disabled={isLoading}
-        className="bg-gray-800"
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            color: '#f9fafb',
-            '& fieldset': {
-              borderColor: '#374151',
-            },
-            '&:hover fieldset': {
-              borderColor: '#4b5563',
-            },
-            '&.Mui-focused fieldset': {
-              borderColor: '#3b82f6',
-            },
-          },
-          '& .MuiInputLabel-root': {
-            color: '#9ca3af',
-            '&.Mui-focused': {
-              color: '#3b82f6',
-            },
-          },
-        }}
-      >
-        {STATUS_OPTIONS.map((option) => (
-          <MenuItem key={option.value || 'all'} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
+      <div className="flex-1">
+        <label className="block text-sm font-medium text-gray-400 mb-1">
+          Status
+        </label>
+        <select
+          value={status}
+          onChange={(event) => updateParam('status', event.target.value || null)}
+          disabled={isLoading}
+          className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white
+            focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+            disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {STATUS_OPTIONS.map((option) => (
+            <option key={option.value || 'all'} value={option.value} className="bg-gray-800">
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
 
-      <Button
-        variant="outlined"
-        onClick={handleReset}
-        disabled={isLoading}
-        className="border-gray-700 text-gray-300 hover:border-gray-600 hover:bg-gray-800"
-      >
-        Limpar filtros
-      </Button>
-    </Stack>
+      <div className="flex items-end">
+        <button
+          onClick={handleReset}
+          disabled={isLoading}
+          className="border border-gray-700 text-gray-300 hover:border-gray-600 hover:bg-gray-800 px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Limpar filtros
+        </button>
+      </div>
+    </div>
   )
 }

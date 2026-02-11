@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, Typography, Box } from '@mui/material'
 import { Line } from 'react-chartjs-2'
 import '../../../../config/chartjs'
 
@@ -96,25 +95,20 @@ export function ChartStatusEvolutionOverTime({ data }: ChartStatusEvolutionOverT
   }
 
   return (
-    <Card className="overflow-hidden rounded-2xl border border-gray-800 bg-gradient-to-br from-gray-900/90 to-gray-800/90 shadow-xl backdrop-blur-sm transition-all duration-300 hover:border-gray-700 hover:shadow-2xl">
-      <CardHeader
-        className="border-b border-gray-800/50 bg-gray-900/50"
-        title={
-          <Typography variant="h6" className="font-semibold text-white">
-            Produtos ativos vs inativos ao longo do tempo
-          </Typography>
-        }
-        subheader={
-          <Typography variant="body2" className="text-gray-400">
-            Evolução histórica do status - Mostra se o time está desativando mais do que ativando
-          </Typography>
-        }
-      />
-      <CardContent className="p-6">
-        <Box className="h-[300px]">
+    <div className="overflow-hidden rounded-2xl border border-gray-800 bg-gradient-to-br from-gray-900/90 to-gray-800/90 shadow-xl backdrop-blur-sm transition-all duration-300 hover:border-gray-700 hover:shadow-2xl">
+      <div className="border-b border-gray-800/50 bg-gray-900/50 px-6 py-4">
+        <h6 className="font-semibold text-white text-lg mb-1">
+          Produtos ativos vs inativos ao longo do tempo
+        </h6>
+        <p className="text-gray-400 text-sm">
+          Evolução histórica do status - Mostra se o time está desativando mais do que ativando
+        </p>
+      </div>
+      <div className="p-6">
+        <div className="h-[300px]">
           <Line data={chartData} options={options} />
-        </Box>
-      </CardContent>
-    </Card>
+        </div>
+      </div>
+    </div>
   )
 }

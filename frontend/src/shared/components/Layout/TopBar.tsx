@@ -1,14 +1,4 @@
-import {
-  AppBar,
-  Box,
-  Breadcrumbs,
-  IconButton,
-  Toolbar,
-  Typography,
-} from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
-import HomeIcon from '@mui/icons-material/Home'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import { List, House, CaretRight } from 'phosphor-react'
 
 type TopBarProps = {
   onMenuClick?: () => void
@@ -18,55 +8,46 @@ type TopBarProps = {
 
 export function TopBar({ onMenuClick, title, breadcrumbs }: TopBarProps) {
   return (
-    <AppBar
-      position="sticky"
-      className="border-b border-gray-800 bg-gray-900/95 backdrop-blur-sm"
-      elevation={0}
-    >
-      <Toolbar className="px-4 lg:px-6">
+    <header className="sticky top-0 z-30 border-b border-gray-800 bg-gray-900/95 backdrop-blur-sm">
+      <nav className="flex items-center px-4 lg:px-6 min-h-[64px]">
         {/* Menu Toggle (mobile) */}
-        <IconButton
-          edge="start"
+        <button
           onClick={onMenuClick}
-          className="mr-3 text-gray-400 lg:hidden"
+          className="mr-3 text-gray-400 lg:hidden p-2 hover:bg-gray-800 rounded-lg transition-colors"
           aria-label="menu"
         >
-          <MenuIcon />
-        </IconButton>
+          <List size={24} />
+        </button>
 
         {/* Breadcrumbs */}
-        <Box className="flex flex-1 items-center">
+        <div className="flex flex-1 items-center">
           {breadcrumbs && breadcrumbs.length > 0 ? (
-            <Breadcrumbs
-              separator={<ChevronRightIcon className="text-gray-600" fontSize="small" />}
-              className="text-gray-400"
-            >
-              <Box className="flex items-center text-gray-500">
-                <HomeIcon className="mr-1" fontSize="small" />
-                <Typography variant="body2">Dashboard</Typography>
-              </Box>
+            <nav className="flex items-center text-gray-400 space-x-2">
+              <div className="flex items-center text-gray-500">
+                <House size={16} className="mr-1" />
+                <span className="text-sm">Dashboard</span>
+              </div>
               {breadcrumbs.map((crumb, index) => (
-                <Typography
-                  key={index}
-                  variant="body2"
-                  className={index === breadcrumbs.length - 1 ? 'text-white font-medium' : 'text-gray-400'}
-                >
-                  {crumb.label}
-                </Typography>
+                <div key={index} className="flex items-center space-x-2">
+                  <CaretRight size={16} className="text-gray-600" />
+                  <span className={`text-sm ${index === breadcrumbs.length - 1 ? 'text-white font-medium' : 'text-gray-400'}`}>
+                    {crumb.label}
+                  </span>
+                </div>
               ))}
-            </Breadcrumbs>
+            </nav>
           ) : (
-            <Typography variant="h6" className="font-semibold text-white">
+            <h6 className="font-semibold text-white text-lg">
               {title || 'Dashboard'}
-            </Typography>
+            </h6>
           )}
-        </Box>
+        </div>
 
         {/* Ações (futuro: notificações, perfil, etc.) */}
-        <Box className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
           {/* Espaço para ações futuras */}
-        </Box>
-      </Toolbar>
-    </AppBar>
+        </div>
+      </nav>
+    </header>
   )
 }

@@ -1,9 +1,7 @@
-import { Box, CircularProgress } from '@mui/material'
-
 export function Loader() {
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" py={8}>
-      <CircularProgress className="text-blue-600" />
-    </Box>
+    <div className="flex justify-center items-center py-8">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+    </div>
   )
 }

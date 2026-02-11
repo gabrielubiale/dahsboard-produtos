@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, Typography, Box } from '@mui/material'
 import { Doughnut } from 'react-chartjs-2'
 import '../../../../config/chartjs'
 
@@ -51,25 +50,20 @@ export function ChartStatusDistribution({ data }: ChartStatusDistributionProps) 
   }
 
   return (
-    <Card className="overflow-hidden rounded-2xl border border-gray-800 bg-gradient-to-br from-gray-900/90 to-gray-800/90 shadow-xl backdrop-blur-sm transition-all duration-300 hover:border-gray-700 hover:shadow-2xl">
-      <CardHeader
-        className="border-b border-gray-800/50 bg-gray-900/50"
-        title={
-          <Typography variant="h6" className="font-semibold text-white">
-            Total de produtos por status
-          </Typography>
-        }
-        subheader={
-          <Typography variant="body2" className="text-gray-400">
-            Active vs Inactive - Pergunta: meu catálogo está saudável?
-          </Typography>
-        }
-      />
-      <CardContent className="p-6">
-        <Box className="flex h-[300px] items-center justify-center">
+    <div className="overflow-hidden rounded-2xl border border-gray-800 bg-gradient-to-br from-gray-900/90 to-gray-800/90 shadow-xl backdrop-blur-sm transition-all duration-300 hover:border-gray-700 hover:shadow-2xl">
+      <div className="border-b border-gray-800/50 bg-gray-900/50 px-6 py-4">
+        <h6 className="font-semibold text-white text-lg mb-1">
+          Total de produtos por status
+        </h6>
+        <p className="text-gray-400 text-sm">
+          Active vs Inactive - Pergunta: meu catálogo está saudável?
+        </p>
+      </div>
+      <div className="p-6">
+        <div className="flex h-[300px] items-center justify-center">
           <Doughnut data={chartData} options={options} />
-        </Box>
-      </CardContent>
-    </Card>
+        </div>
+      </div>
+    </div>
   )
 }

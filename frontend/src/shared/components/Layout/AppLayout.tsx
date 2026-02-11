@@ -1,4 +1,3 @@
-import { Box, Drawer } from '@mui/material'
 import { useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Sidebar } from './Sidebar'
@@ -23,44 +22,37 @@ export function AppLayout() {
   }
 
   return (
-    <Box className="flex min-h-screen bg-black">
+    <div className="flex min-h-screen bg-black">
       {/* Sidebar Desktop */}
-      <Box className="hidden lg:block">
+      <div className="hidden lg:block">
         <Sidebar isOpen={true} />
-      </Box>
+      </div>
 
       {/* Sidebar Mobile (Drawer) */}
-      <Drawer
-        anchor="left"
-        open={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-        ModalProps={{
-          keepMounted: true, // Melhor performance em mobile
-        }}
-        className="lg:hidden"
-        sx={{
-          '& .MuiDrawer-paper': {
-            width: 256,
-            backgroundColor: '#111827',
-            borderRight: '1px solid #1f2937',
-          },
-        }}
-      >
-        <Sidebar isOpen={true} onClose={() => setSidebarOpen(false)} />
-      </Drawer>
+      {sidebarOpen && (
+        <>
+          <div 
+            className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+            onClick={() => setSidebarOpen(false)}
+          />
+          <div className="fixed left-0 top-0 z-40 h-screen w-70 lg:hidden">
+            <Sidebar isOpen={true} onClose={() => setSidebarOpen(false)} />
+          </div>
+        </>
+      )}
 
       {/* Conteúdo Principal */}
-      <Box className="flex flex-1 flex-col lg:ml-64">
+      <div className="flex flex-1 flex-col lg:ml-70 w-full">
         {/* TopBar */}
         <TopBar onMenuClick={() => setSidebarOpen(true)} breadcrumbs={getBreadcrumbs()} />
 
         {/* Conteúdo Scrollável */}
-        <Box className="flex-1 overflow-y-auto bg-black">
-          <Box className="mx-auto max-w-[1920px] p-4 lg:p-6">
+        <div className="flex-1 overflow-y-auto bg-black">
+          <div className="mx-auto max-w-[1920px] p-4 lg:p-6">
             <Outlet />
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

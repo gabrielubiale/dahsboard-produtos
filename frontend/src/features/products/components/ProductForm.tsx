@@ -1,13 +1,5 @@
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import {
-  Box,
-  Button,
-  MenuItem,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material'
 import type { ProductStatus } from '../../../services/types'
 import { useProductsStore } from '../../../store/productsStore'
 
@@ -33,7 +25,6 @@ export function ProductForm() {
 
   useEffect(() => {
     if (isEditMode && id) {
-      // carga inicial do produto para edição
       void loadProductById(id)
     }
   }, [id, isEditMode, loadProductById])
@@ -48,7 +39,6 @@ export function ProductForm() {
     const status = formData.get('status') as ProductStatus
 
     if (!name || !category || !price || !status) {
-      // validação simples por enquanto
       return
     }
 
@@ -77,69 +67,100 @@ export function ProductForm() {
   const defaultStatus = selectedProduct?.status ?? 'active'
 
   return (
-    <Box component="form" onSubmit={handleSubmit}>
-      <Stack spacing={2}>
-        <Typography variant="h6">
-          {isEditMode ? 'Editar produto' : 'Novo produto'}
-        </Typography>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <h6 className="text-lg font-semibold text-white mb-4">
+        {isEditMode ? 'Editar produto' : 'Novo produto'}
+      </h6>
 
-        <TextField
+      <div>
+        <label className="block text-sm font-medium text-gray-400 mb-1">
+          Nome
+        </label>
+        <input
           name="name"
-          label="Nome"
+          type="text"
           defaultValue={defaultName}
           required
           disabled={isLoading}
+          className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500
+            focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+            disabled:opacity-50 disabled:cursor-not-allowed"
         />
+      </div>
 
-        <TextField
+      <div>
+        <label className="block text-sm font-medium text-gray-400 mb-1">
+          Categoria
+        </label>
+        <input
           name="category"
-          label="Categoria"
+          type="text"
           defaultValue={defaultCategory}
           required
           disabled={isLoading}
+          className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500
+            focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+            disabled:opacity-50 disabled:cursor-not-allowed"
         />
+      </div>
 
-        <TextField
+      <div>
+        <label className="block text-sm font-medium text-gray-400 mb-1">
+          Preço
+        </label>
+        <input
           name="price"
-          label="Preço"
           type="number"
+          min="0"
+          step="0.01"
           defaultValue={defaultPrice}
           required
-          inputProps={{ min: 0, step: 0.01 }}
           disabled={isLoading}
+          className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500
+            focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+            disabled:opacity-50 disabled:cursor-not-allowed"
         />
+      </div>
 
-        <TextField
+      <div>
+        <label className="block text-sm font-medium text-gray-400 mb-1">
+          Status
+        </label>
+        <select
           name="status"
-          label="Status"
-          select
           defaultValue={defaultStatus}
           required
           disabled={isLoading}
+          className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white
+            focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+            disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {STATUS_OPTIONS.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
+            <option key={option.value} value={option.value} className="bg-gray-800">
               {option.label}
-            </MenuItem>
+            </option>
           ))}
-        </TextField>
+        </select>
+      </div>
 
-        <Stack direction="row" spacing={2} justifyContent="flex-end">
-          <Button
-            type="button"
-            variant="outlined"
-            onClick={() => navigate('/products')}
-            disabled={isLoading}
-          >
-            Cancelar
-          </Button>
+      <div className="flex justify-end gap-2 pt-4">
+        <button
+          type="button"
+          onClick={() => navigate('/products')}
+          disabled={isLoading}
+          className="border border-gray-700 text-gray-300 px-4 py-2 rounded-lg hover:border-gray-600 hover:bg-gray-800/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Cancelar
+        </button>
 
-          <Button type="submit" variant="contained" disabled={isLoading}>
-            {isEditMode ? 'Salvar alterações' : 'Criar produto'}
-          </Button>
-        </Stack>
-      </Stack>
-    </Box>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isEditMode ? 'Salvar alterações' : 'Criar produto'}
+        </button>
+      </div>
+    </form>
   )
 }
-

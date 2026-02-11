@@ -1,13 +1,12 @@
 import { useMemo } from 'react'
-import { Box, Grid, Typography } from '@mui/material'
 import {
-  Inventory2,
+  Package,
   CheckCircle,
-  Cancel,
-  AttachMoney,
-  Category,
-  TrendingUp,
-} from '@mui/icons-material'
+  X,
+  CurrencyDollar,
+  Tag,
+  TrendUp,
+} from 'phosphor-react'
 import { useProductsStore } from '../../../store/productsStore'
 
 export function StatsCards() {
@@ -40,7 +39,7 @@ export function StatsCards() {
     {
       title: 'Total de Produtos',
       value: stats.total,
-      icon: Inventory2,
+      icon: Package,
       gradient: 'from-blue-500/20 via-blue-600/10 to-transparent',
       iconBg: 'bg-blue-500/20',
       iconColor: 'text-blue-400',
@@ -60,7 +59,7 @@ export function StatsCards() {
     {
       title: 'Produtos Inativos',
       value: stats.inactive,
-      icon: Cancel,
+      icon: X,
       gradient: 'from-red-500/20 via-red-600/10 to-transparent',
       iconBg: 'bg-red-500/20',
       iconColor: 'text-red-400',
@@ -73,7 +72,7 @@ export function StatsCards() {
         style: 'currency',
         currency: 'BRL',
       }),
-      icon: AttachMoney,
+      icon: CurrencyDollar,
       gradient: 'from-purple-500/20 via-purple-600/10 to-transparent',
       iconBg: 'bg-purple-500/20',
       iconColor: 'text-purple-400',
@@ -83,7 +82,7 @@ export function StatsCards() {
     {
       title: 'Categorias',
       value: stats.categories,
-      icon: Category,
+      icon: Tag,
       gradient: 'from-orange-500/20 via-orange-600/10 to-transparent',
       iconBg: 'bg-orange-500/20',
       iconColor: 'text-orange-400',
@@ -96,7 +95,7 @@ export function StatsCards() {
         style: 'currency',
         currency: 'BRL',
       }),
-      icon: TrendingUp,
+      icon: TrendUp,
       gradient: 'from-pink-500/20 via-pink-600/10 to-transparent',
       iconBg: 'bg-pink-500/20',
       iconColor: 'text-pink-400',
@@ -106,76 +105,46 @@ export function StatsCards() {
   ]
 
   return (
-    <Grid container spacing={3} className="mb-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 mb-8">
       {statCards.map((stat, index) => {
         const Icon = stat.icon
         return (
-          <Grid size={{ xs: 12, sm: 6, lg: 4, xl: 2 }} key={index}>
-            <Box
-              className={`
-                group relative overflow-hidden rounded-2xl border
-                bg-gradient-to-br from-gray-900/90 to-gray-800/90
-                p-6 shadow-lg backdrop-blur-sm
-                transition-all duration-300 ease-out
-                hover:scale-[1.02] hover:border-opacity-60 hover:shadow-2xl
-                ${stat.borderColor}
-              `}
-              sx={{
-                '&::before': {
-                  content: '""',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  background: `linear-gradient(135deg, ${stat.gradient})`,
-                  opacity: 0,
-                  transition: 'opacity 0.3s ease',
-                },
-                '&:hover::before': {
-                  opacity: 1,
-                },
-              }}
-            >
-              <Box className="relative z-10 flex items-start justify-between">
-                <Box className="flex-1">
-                  <Typography
-                    variant="body2"
-                    className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400"
-                  >
-                    {stat.title}
-                  </Typography>
-                  <Typography
-                    variant="h4"
-                    className="font-bold text-white transition-colors group-hover:text-gray-100"
-                    component="div"
-                  >
-                    {stat.value}
-                  </Typography>
-                </Box>
-                <Box
-                  className={`
-                    flex h-14 w-14 items-center justify-center rounded-xl
-                    shadow-lg transition-all duration-300
-                    group-hover:scale-110 group-hover:shadow-xl
-                    ${stat.iconBg}
-                  `}
-                >
-                  <Icon className={`text-2xl ${stat.iconColor} transition-transform group-hover:scale-110`} />
-                </Box>
-              </Box>
-              <Box
-                className={`
-                  absolute -right-12 -top-12 h-32 w-32 rounded-full
-                  bg-gradient-to-br opacity-0 blur-3xl
-                  transition-opacity duration-500 group-hover:opacity-20
-                  ${stat.glowColor}
-                `}
-              />
-            </Box>
-          </Grid>
+          <div key={index} className={`
+            group relative overflow-hidden rounded-2xl border
+            bg-gradient-to-br from-gray-900/90 to-gray-800/90
+            p-6 shadow-lg backdrop-blur-sm
+            transition-all duration-300 ease-out
+            hover:scale-[1.02] hover:border-opacity-60 hover:shadow-2xl
+            ${stat.borderColor}
+          `}>
+            <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
+            <div className="relative z-10 flex items-start justify-between">
+              <div className="flex-1">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                  {stat.title}
+                </p>
+                <h4 className="font-bold text-white transition-colors group-hover:text-gray-100 text-2xl">
+                  {stat.value}
+                </h4>
+              </div>
+              <div className={`
+                flex h-14 w-14 items-center justify-center rounded-xl
+                shadow-lg transition-all duration-300
+                group-hover:scale-110 group-hover:shadow-xl
+                ${stat.iconBg}
+              `}>
+                <Icon size={28} weight="fill" className={`${stat.iconColor} transition-transform group-hover:scale-110`} />
+              </div>
+            </div>
+            <div className={`
+              absolute -right-12 -top-12 h-32 w-32 rounded-full
+              bg-gradient-to-br opacity-0 blur-3xl
+              transition-opacity duration-500 group-hover:opacity-20
+              ${stat.glowColor}
+            `} />
+          </div>
         )
       })}
-    </Grid>
+    </div>
   )
 }
