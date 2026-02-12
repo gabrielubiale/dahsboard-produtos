@@ -16,7 +16,9 @@ import { TabsContainer } from '../shared/components/TabsContainer'
 
 export function Products() {
   const [searchParams] = useSearchParams()
-  const [view, setView] = useState<'dashboard' | 'list'>('dashboard')
+  const [view, setView] = useState<'dashboard' | 'list'>(() =>
+    searchParams.get('search') || searchParams.get('status') ? 'list' : 'dashboard'
+  )
 
   const { products, isLoading, error, loadProducts, removeProduct, setFilters } = useProductsStore()
   const { loadSales } = useSalesStore()
