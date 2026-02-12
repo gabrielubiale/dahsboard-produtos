@@ -10,10 +10,11 @@ import { salesRouter } from './routes/sales'
 export function createApp() {
   const app = express()
 
-  // permite que o front faça requisições rodando na porta 5173 evitando erro de cross-origin
+  // permite que o front faça requisições (local ou Vercel). FRONTEND_URL no Railway = URL do front (ex: https://seu-app.vercel.app)
+  const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:5173'
   app.use(
     cors({
-      origin: 'http://localhost:5173',
+      origin: allowedOrigin,
     }),
   )
 

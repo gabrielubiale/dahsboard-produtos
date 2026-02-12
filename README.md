@@ -28,6 +28,14 @@ A rota `/` exibe uma LandingPage com esta documentação. O Dashboard está em `
 
 ---
 
+## Deploy
+
+**Frontend (Vercel):** O `vercel.json` aponta para `frontend/`. No Vercel, adicione a variável de ambiente `VITE_API_URL` com a URL da API (ex: `https://lively-solace-production-3892.up.railway.app`).
+
+**API (Railway):** Adicione a variável `FRONTEND_URL` com a URL do front no Vercel (ex: `https://seu-app.vercel.app`) para liberar CORS.
+
+---
+
 ## Requisitos atendidos
 
 | Requisito | Implementação |
