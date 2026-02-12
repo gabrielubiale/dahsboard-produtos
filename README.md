@@ -4,6 +4,8 @@ Desafio técnico de dashboard administrativo de produtos em React + TypeScript. 
 
 **Stack:** React 19, Vite, TypeScript, Zustand, Tailwind CSS, Chart.js, Node, Express.
 
+![Dashboard - Visão estratégica de produtos e vendas](docs/dashboard-screenshot.png)
+
 ---
 
 ## Como executar
