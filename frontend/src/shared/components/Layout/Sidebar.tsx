@@ -32,6 +32,8 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         window.history.pushState(null, '', anchor)
         setActiveAnchor(anchor)
       }
+    } else if (window.location.hash) {
+      window.location.href = path
     }
     if (onClose) {
       onClose()
