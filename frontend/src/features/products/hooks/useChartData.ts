@@ -110,26 +110,41 @@ export function useChartData(products: Product[], sales: Sale[]) {
     return { labels, data }
   }, [sales])
 
-  // 7. Top 5: Quantidade vs Faturamento (grouped bar)
-  const getTop5QuantityVsRevenue = useMemo(() => {
-    const qtyByProduct = new Map<string, number>()
-    const revByProduct = new Map<string, number>()
-    sales.forEach((s) => {
-      qtyByProduct.set(s.produtoId, (qtyByProduct.get(s.produtoId) || 0) + s.quantidade)
-      revByProduct.set(s.produtoId, (revByProduct.get(s.produtoId) || 0) + s.valorTotal)
+  // 7. Stacked Bar Chart - Faturamento total por mês, segmentado por produto
+  const getStackedRevenueByMonth = useMemo(() => {
+    const months = ['01', '02', '03', '04']
+    const monthKeys = months.map((m) => `2025-${m}`)
+    const labels = months.map((m) => {
+      const names: Record<string, string> = { '01': 'Jan', '02': 'Fev', '03': 'Mar', '04': 'Abr' }
+      return names[m] || m
     })
-    const productIds = Array.from(new Set(sales.map((s) => s.produtoId)))
-    const combined = productIds.map((id) => ({
-      name: productMap.get(id)?.name ?? id,
-      qty: qtyByProduct.get(id) || 0,
-      rev: revByProduct.get(id) || 0,
+    const byProductMonth = new Map<string, number[]>()
+    sales.forEach((s) => {
+      if (!byProductMonth.has(s.produtoId)) {
+        byProductMonth.set(s.produtoId, months.map(() => 0))
+      }
+      const d = new Date(s.data)
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
+      const idx = monthKeys.indexOf(key)
+      if (idx >= 0) {
+        const arr = byProductMonth.get(s.produtoId)!
+        arr[idx] += s.valorTotal
+      }
+    })
+    const totalByProduct = new Map<string, number>()
+    byProductMonth.forEach((data, id) => {
+      totalByProduct.set(id, data.reduce((a, b) => a + b, 0))
+    })
+    const COLORS = ['#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16']
+    const sorted = Array.from(byProductMonth.entries()).sort(
+      (a, b) => (totalByProduct.get(b[0]) ?? 0) - (totalByProduct.get(a[0]) ?? 0)
+    )
+    const datasets = sorted.map(([productId, data], i) => ({
+      label: productMap.get(productId)?.name ?? productId,
+      data,
+      backgroundColor: COLORS[i % COLORS.length],
     }))
-    combined.sort((a, b) => b.qty - a.qty)
-    const top5 = combined.slice(0, 5)
-    const labels = top5.map((p) => p.name)
-    const quantityData = top5.map((p) => p.qty)
-    const revenueData = top5.map((p) => p.rev)
-    return { labels, quantityData, revenueData }
+    return { labels, datasets }
   }, [sales, productMap])
 
   // 8. Distribuição de vendas por categoria
@@ -151,7 +166,7 @@ export function useChartData(products: Product[], sales: Sale[]) {
     getSalesCountByMonth,
     getRevenueShareByProduct,
     getAverageTicketByMonth,
-    getTop5QuantityVsRevenue,
+    getStackedRevenueByMonth,
     getSalesByCategory,
   }
 }

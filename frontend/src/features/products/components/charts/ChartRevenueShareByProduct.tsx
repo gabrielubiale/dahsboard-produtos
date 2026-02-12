@@ -40,15 +40,9 @@ export function ChartRevenueShareByProduct({ data }: Props) {
     },
   }
   return (
-    <div className="overflow-hidden rounded-2xl border border-gray-800 bg-linear-to-br from-gray-900/90 to-gray-800/90 shadow-xl backdrop-blur-sm transition-all duration-300 hover:border-gray-700 hover:shadow-2xl">
-      <div className="border-b border-gray-800/50 bg-gray-900/50 px-6 py-4">
-        <h6 className="font-semibold text-white text-lg mb-1">Participação no faturamento total</h6>
-        <p className="text-gray-400 text-sm">Percentual de contribuição por produto</p>
-      </div>
-      <div className="p-6">
-        <div className="flex h-[300px] items-center justify-center">
-          <Doughnut data={chartData} options={options} />
-        </div>
+    <div className="p-6">
+      <div className="flex h-[300px] items-center justify-center">
+        <Doughnut data={chartData} options={options} />
       </div>
     </div>
   )

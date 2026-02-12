@@ -49,8 +49,8 @@ export const menuItems: MenuItem[] = [
         icon: <ChartLine size={ICON_SIZE_SUBITEM} />,
       },
       {
-        label: 'Top 5: Quantidade vs Faturamento',
-        anchor: '#chart-top5-quantity-vs-revenue',
+        label: 'Produto de maior faturamento por mês',
+        anchor: '#chart-top-product-sales-by-month',
         icon: <TrendUp size={ICON_SIZE_SUBITEM} />,
       },
       {

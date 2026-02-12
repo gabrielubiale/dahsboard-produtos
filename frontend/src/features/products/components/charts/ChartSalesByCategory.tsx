@@ -16,7 +16,7 @@ export function ChartSalesByCategory({ data }: Props) {
   }
   const options = {
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
       tooltip: {
@@ -41,15 +41,9 @@ export function ChartSalesByCategory({ data }: Props) {
     },
   }
   return (
-    <div className="overflow-hidden rounded-2xl border border-gray-800 bg-linear-to-br from-gray-900/90 to-gray-800/90 shadow-xl backdrop-blur-sm transition-all duration-300 hover:border-gray-700 hover:shadow-2xl">
-      <div className="border-b border-gray-800/50 bg-gray-900/50 px-6 py-4">
-        <h6 className="font-semibold text-white text-lg mb-1">Distribuição de vendas por categoria</h6>
-        <p className="text-gray-400 text-sm">Quantidade total de vendas por categoria de produto</p>
-      </div>
-      <div className="p-6">
-        <div className="h-[300px]">
-          <Bar data={chartData} options={options} />
-        </div>
+    <div className="min-h-0 flex-1 p-6">
+      <div className="h-full min-h-[200px]">
+        <Bar data={chartData} options={options} />
       </div>
     </div>
   )
