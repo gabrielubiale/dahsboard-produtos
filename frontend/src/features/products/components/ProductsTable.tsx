@@ -1,17 +1,15 @@
 import { Pencil, Trash } from 'phosphor-react'
-import { useNavigate } from 'react-router-dom'
 import type { Product } from '../../../services/types'
 import type { Column } from '../../../shared/components/DynamicTable'
 import { DynamicTable } from '../../../shared/components/DynamicTable'
 
 type ProductsTableProps = {
   products: Product[]
-  onDelete: (id: string) => void
+  onEdit: (product: Product) => void
+  onDelete: (product: Product) => void
 }
 
-export function ProductsTable({ products, onDelete }: ProductsTableProps) {
-  const navigate = useNavigate()
-
+export function ProductsTable({ products, onEdit, onDelete }: ProductsTableProps) {
   const columns: Column<Product>[] = [
     {
       id: 'name',
@@ -65,7 +63,7 @@ export function ProductsTable({ products, onDelete }: ProductsTableProps) {
         <div className="flex items-center justify-end gap-1">
           <button
             type="button"
-            onClick={() => navigate(`/products/${product.id}/edit`)}
+            onClick={() => onEdit(product)}
             className="text-blue-400 transition-all hover:bg-blue-500/20 hover:scale-110 p-2 rounded-lg"
             title="Editar"
           >
@@ -73,7 +71,7 @@ export function ProductsTable({ products, onDelete }: ProductsTableProps) {
           </button>
           <button
             type="button"
-            onClick={() => onDelete(product.id)}
+            onClick={() => onDelete(product)}
             className="text-red-400 transition-all hover:bg-red-500/20 hover:scale-110 p-2 rounded-lg"
             title="Excluir"
           >
