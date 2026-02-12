@@ -2,10 +2,10 @@ export type ProductStatus = 'active' | 'inactive'
 
 export type Sale = {
   id: string
-  produtoId: string
-  data: string
-  quantidade: number
-  valorTotal: number
+  productId: string
+  date: string
+  quantity: number
+  totalAmount: number
 }
 
 export type Product = {

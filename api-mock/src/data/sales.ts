@@ -1,23 +1,30 @@
-// 30 vendas - distribuídas em Jan, Fev, Mar, Abr 2025
-// Campos: id, produtoId, data, quantidade, valorTotal
-// valorTotal = quantidade × preço do produto
+import type { Sale } from '../types'
+import { products } from './products'
 
-const { products } = require('./products')
+function sale(
+  id: string,
+  productId: string,
+  year: number,
+  month: number,
+  day: number,
+  quantity: number,
+): Sale {
+  const product = products.find((p) => p.id === productId)
+  const totalAmount = product
+    ? Math.round(quantity * product.price * 100) / 100
+    : 0
 
-function sale(id, produtoId, year, month, day, quantidade) {
-  const product = products.find((p) => p.id === produtoId)
-  const valorTotal = product ? Math.round(quantidade * product.price * 100) / 100 : 0
   return {
     id,
-    produtoId,
-    data: new Date(year, month - 1, day).toISOString(),
-    quantidade,
-    valorTotal,
+    productId,
+    date: new Date(year, month - 1, day).toISOString(),
+    quantity,
+    totalAmount,
   }
 }
 
-const sales = [
-  // Janeiro 2025 (8 vendas)
+export const sales: Sale[] = [
+  // janeiro 2025 (8 vendas)
   sale('s1', '1', 2025, 1, 3, 2),
   sale('s2', '2', 2025, 1, 7, 1),
   sale('s3', '4', 2025, 1, 10, 5),
@@ -26,7 +33,7 @@ const sales = [
   sale('s6', '5', 2025, 1, 22, 4),
   sale('s7', '1', 2025, 1, 25, 1),
   sale('s8', '8', 2025, 1, 28, 2),
-  // Fevereiro 2025 (7 vendas)
+  // fevereiro 2025 (7 vendas)
   sale('s9', '2', 2025, 2, 2, 2),
   sale('s10', '4', 2025, 2, 5, 8),
   sale('s11', '3', 2025, 2, 10, 6),
@@ -34,7 +41,7 @@ const sales = [
   sale('s13', '1', 2025, 2, 18, 1),
   sale('s14', '9', 2025, 2, 22, 7),
   sale('s15', '7', 2025, 2, 26, 2),
-  // Março 2025 (8 vendas)
+  // março 2025 (8 vendas)
   sale('s16', '1', 2025, 3, 3, 3),
   sale('s17', '8', 2025, 3, 6, 1),
   sale('s18', '2', 2025, 3, 11, 1),
@@ -43,7 +50,7 @@ const sales = [
   sale('s21', '4', 2025, 3, 22, 4),
   sale('s22', '7', 2025, 3, 25, 1),
   sale('s23', '9', 2025, 3, 28, 4),
-  // Abril 2025 (7 vendas)
+  // abril 2025 (7 vendas)
   sale('s24', '1', 2025, 4, 2, 2),
   sale('s25', '2', 2025, 4, 5, 2),
   sale('s26', '4', 2025, 4, 9, 6),
@@ -53,4 +60,3 @@ const sales = [
   sale('s30', '7', 2025, 4, 24, 4),
 ]
 
-module.exports = { sales }

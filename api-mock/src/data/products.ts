@@ -1,11 +1,10 @@
-// 10 produtos de tecnologia - categorias: Hardware, Software, Acessórios, Mobile
-// Campos: id, name, category, price, status, createdAt, updatedAt
+import type { Product } from '../types'
 
-function isoDate(year, month, day) {
+function isoDate(year: number, month: number, day: number): string {
   return new Date(year, month - 1, day).toISOString()
 }
 
-const products = [
+export const products: Product[] = [
   {
     id: '1',
     name: 'Notebook Pro 14"',
@@ -53,7 +52,7 @@ const products = [
   },
   {
     id: '6',
-    name: 'Tablet Pro 12.9"',
+    name: 'Tablet Pro 12.9\"',
     category: 'Mobile',
     price: 7499.9,
     status: 'inactive',
@@ -71,7 +70,7 @@ const products = [
   },
   {
     id: '8',
-    name: 'Monitor 4K 32"',
+    name: 'Monitor 4K 32\"',
     category: 'Hardware',
     price: 3299.9,
     status: 'active',
@@ -98,11 +97,7 @@ const products = [
   },
 ]
 
-function generateId() {
+export function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substring(2, 8)
 }
 
-module.exports = {
-  products,
-  generateId,
-}

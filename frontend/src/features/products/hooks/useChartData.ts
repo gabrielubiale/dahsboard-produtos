@@ -9,7 +9,7 @@ export function useChartData(products: Product[], sales: Sale[]) {
   const getProductsMostSoldByQuantity = useMemo(() => {
     const byProduct = new Map<string, number>()
     sales.forEach((s) => {
-      byProduct.set(s.produtoId, (byProduct.get(s.produtoId) || 0) + s.quantidade)
+      byProduct.set(s.productId, (byProduct.get(s.productId) || 0) + s.quantity)
     })
     const entries = Array.from(byProduct.entries())
       .map(([id, qty]) => [productMap.get(id)?.name ?? id, qty] as [string, number])
@@ -21,7 +21,7 @@ export function useChartData(products: Product[], sales: Sale[]) {
   const getProductsMostRevenue = useMemo(() => {
     const byProduct = new Map<string, number>()
     sales.forEach((s) => {
-      byProduct.set(s.produtoId, (byProduct.get(s.produtoId) || 0) + s.valorTotal)
+      byProduct.set(s.productId, (byProduct.get(s.productId) || 0) + s.totalAmount)
     })
     const entries = Array.from(byProduct.entries())
       .map(([id, val]) => [productMap.get(id)?.name ?? id, val] as [string, number])
@@ -35,9 +35,9 @@ export function useChartData(products: Product[], sales: Sale[]) {
     const months = ['01', '02', '03', '04']
     months.forEach((m) => monthMap.set(`2025-${m}`, 0))
     sales.forEach((s) => {
-      const d = new Date(s.data)
+      const d = new Date(s.date)
       const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
-      if (monthMap.has(key)) monthMap.set(key, (monthMap.get(key) || 0) + s.valorTotal)
+      if (monthMap.has(key)) monthMap.set(key, (monthMap.get(key) || 0) + s.totalAmount)
     })
     const labels = months.map((m) => {
       const names: Record<string, string> = { '01': 'Jan', '02': 'Fev', '03': 'Mar', '04': 'Abr' }
@@ -53,7 +53,7 @@ export function useChartData(products: Product[], sales: Sale[]) {
     const months = ['01', '02', '03', '04']
     months.forEach((m) => monthMap.set(`2025-${m}`, 0))
     sales.forEach((s) => {
-      const d = new Date(s.data)
+      const d = new Date(s.date)
       const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
       if (monthMap.has(key)) monthMap.set(key, (monthMap.get(key) || 0) + 1)
     })
@@ -70,8 +70,8 @@ export function useChartData(products: Product[], sales: Sale[]) {
     const byProduct = new Map<string, number>()
     let total = 0
     sales.forEach((s) => {
-      byProduct.set(s.produtoId, (byProduct.get(s.produtoId) || 0) + s.valorTotal)
-      total += s.valorTotal
+      byProduct.set(s.productId, (byProduct.get(s.productId) || 0) + s.totalAmount)
+      total += s.totalAmount
     })
     if (total === 0) return { labels: [] as string[], data: [] as number[] }
     const entries = Array.from(byProduct.entries())
@@ -90,10 +90,10 @@ export function useChartData(products: Product[], sales: Sale[]) {
       countByMonth.set(`2025-${m}`, 0)
     })
     sales.forEach((s) => {
-      const d = new Date(s.data)
+      const d = new Date(s.date)
       const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
       if (revenueByMonth.has(key)) {
-        revenueByMonth.set(key, (revenueByMonth.get(key) || 0) + s.valorTotal)
+        revenueByMonth.set(key, (revenueByMonth.get(key) || 0) + s.totalAmount)
         countByMonth.set(key, (countByMonth.get(key) || 0) + 1)
       }
     })
@@ -120,15 +120,15 @@ export function useChartData(products: Product[], sales: Sale[]) {
     })
     const byProductMonth = new Map<string, number[]>()
     sales.forEach((s) => {
-      if (!byProductMonth.has(s.produtoId)) {
-        byProductMonth.set(s.produtoId, months.map(() => 0))
+      if (!byProductMonth.has(s.productId)) {
+        byProductMonth.set(s.productId, months.map(() => 0))
       }
-      const d = new Date(s.data)
+      const d = new Date(s.date)
       const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
       const idx = monthKeys.indexOf(key)
       if (idx >= 0) {
-        const arr = byProductMonth.get(s.produtoId)!
-        arr[idx] += s.valorTotal
+        const arr = byProductMonth.get(s.productId)!
+        arr[idx] += s.totalAmount
       }
     })
     const totalByProduct = new Map<string, number>()
@@ -151,9 +151,9 @@ export function useChartData(products: Product[], sales: Sale[]) {
   const getSalesByCategory = useMemo(() => {
     const byCategory = new Map<string, number>()
     sales.forEach((s) => {
-      const product = productMap.get(s.produtoId)
+      const product = productMap.get(s.productId)
       const cat = product?.category ?? 'Outros'
-      byCategory.set(cat, (byCategory.get(cat) || 0) + s.quantidade)
+      byCategory.set(cat, (byCategory.get(cat) || 0) + s.quantity)
     })
     const entries = Array.from(byCategory.entries()).sort((a, b) => b[1] - a[1])
     return { labels: entries.map((e) => e[0]), data: entries.map((e) => e[1]) }

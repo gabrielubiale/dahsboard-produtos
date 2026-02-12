@@ -12,7 +12,7 @@ export function StatsCardsProductsDashboard() {
     const total = products.length
     const active = products.filter((p) => p.status === 'active').length
     const totalVendas = sales.length
-    const totalFaturamento = sales.reduce((sum, s) => sum + s.valorTotal, 0)
+    const totalFaturamento = sales.reduce((sum, s) => sum + s.totalAmount, 0)
 
     return {
       total,
