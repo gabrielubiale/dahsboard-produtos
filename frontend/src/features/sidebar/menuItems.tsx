@@ -1,4 +1,5 @@
 import {
+  House,
   Package,
   SquaresFour,
   ChartPie,
@@ -14,6 +15,11 @@ const ICON_SIZE_ITEM = 28
 const ICON_SIZE_SUBITEM = 22
 
 export const menuItems: MenuItem[] = [
+  {
+    label: 'Início',
+    path: '/',
+    icon: <House size={ICON_SIZE_ITEM} />,
+  },
   {
     label: 'Dashboard',
     path: '/products',
