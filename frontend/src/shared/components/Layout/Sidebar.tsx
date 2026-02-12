@@ -70,33 +70,43 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
 
             return (
               <li key={item.path}>
-                <button
-                  onClick={() => {
-                    if (hasSubItems) {
-                      handleToggleSubMenu(item.label)
-                    } else {
-                      handleNavigation(item.path)
-                    }
-                  }}
-                  className={`w-full cursor-pointer rounded-lg transition-all flex items-center px-3 py-2
+                <div
+                  className={`w-full rounded-lg transition-all flex items-center
                     ${isActive
                       ? 'bg-linear-to-r from-blue-600/20 to-purple-600/20 text-blue-400 shadow-lg'
-                      : 'text-gray-400 hover:bg-gray-800/50 hover:text-white'
+                      : 'text-gray-400'
                     }
                   `}
                 >
-                  <div className={`min-w-0 mr-3 transition-colors flex items-center ${isActive ? 'text-blue-400' : 'text-gray-500'}`}>
-                    {item.icon}
-                  </div>
-                  <span className={`font-medium text-lg flex-1 text-left ${isActive ? 'text-white' : 'text-gray-300'}`}>
-                    {item.label}
-                  </span>
-                  {hasSubItems && (
-                    <div className="text-gray-500">
-                      {isSubMenuOpen ? <CaretUp size={20} /> : <CaretDown size={20} />}
+                  <button
+                    onClick={() => handleNavigation(item.path)}
+                    className={`flex-1 cursor-pointer rounded-lg transition-all flex items-center px-3 py-2 text-left
+                      ${!isActive ? 'hover:bg-gray-800/50 hover:text-white' : ''}
+                    `}
+                  >
+                    <div className={`min-w-0 mr-3 transition-colors flex items-center ${isActive ? 'text-blue-400' : 'text-gray-500'}`}>
+                      {item.icon}
                     </div>
+                    <span className={`font-medium text-lg flex-1 ${isActive ? 'text-white' : 'text-gray-300'}`}>
+                      {item.label}
+                    </span>
+                  </button>
+                  {hasSubItems && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        handleToggleSubMenu(item.label)
+                      }}
+                      className={`cursor-pointer rounded-md p-1.5 transition-colors flex items-center justify-center shrink-0 mr-1
+                        ${isActive ? 'text-blue-400 hover:bg-blue-600/30' : 'text-gray-500 hover:bg-gray-700'}
+                      `}
+                      aria-label={isSubMenuOpen ? 'Fechar submenu' : 'Abrir submenu'}
+                    >
+                      {isSubMenuOpen ? <CaretUp size={20} /> : <CaretDown size={20} />}
+                    </button>
                   )}
-                </button>
+                </div>
 
                 {/* subitens */}
                 {hasSubItems && (

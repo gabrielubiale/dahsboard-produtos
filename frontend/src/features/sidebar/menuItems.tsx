@@ -1,4 +1,5 @@
 import {
+  Package,
   SquaresFour,
   ChartPie,
   ChartBar,
@@ -59,5 +60,10 @@ export const menuItems: MenuItem[] = [
         icon: <ChartPie size={ICON_SIZE_SUBITEM} />,
       },
     ],
+  },
+  {
+    label: 'Produtos',
+    path: '/lista',
+    icon: <Package size={ICON_SIZE_ITEM} />,
   },
 ]
