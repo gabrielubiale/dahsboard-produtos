@@ -1,4 +1,4 @@
-import type { NewProduct, ProductStatus } from '../../../services/types'
+import type { NewProduct, ProductStatus } from '../../../../services/types'
 
 const STATUS_OPTIONS: { value: ProductStatus; label: string }[] = [
   { value: 'active', label: 'Disponível' },

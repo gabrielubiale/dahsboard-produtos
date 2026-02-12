@@ -1,4 +1,4 @@
-import { ChartContainerHeader } from './ChartContainerHeader'
+import { ChartContainerHeader } from '../ChartContainerHeader/ChartContainerHeader'
 
 type ChartContainerProps = {
   id: string

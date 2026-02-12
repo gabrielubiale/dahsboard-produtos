@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { MagnifyingGlass } from 'phosphor-react'
-import type { ProductStatus } from '../../../services/types'
+import type { ProductStatus } from '../../../../services/types'
 
 type StatusOption = {
   value: ProductStatus | ''

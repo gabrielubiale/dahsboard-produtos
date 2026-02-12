@@ -1,7 +1,7 @@
-import { useProductsStore } from '../../../store/productsStore'
-import { useSalesStore } from '../../../store/salesStore'
-import { ChartContainer } from '../../../shared/components/ChartContainer'
-import { useChartData } from '../hooks/useChartData'
+import { useProductsStore } from '../../../../store/productsStore'
+import { useSalesStore } from '../../../../store/salesStore'
+import { ChartContainer } from '../../../../shared/components/ChartContainer/ChartContainer'
+import { useChartData } from '../../hooks/useChartData'
 import { ChartProductsMostSoldByQuantity } from './charts/ChartProductsMostSoldByQuantity'
 import { ChartProductsMostRevenue } from './charts/ChartProductsMostRevenue'
 import { ChartRevenueByMonth } from './charts/ChartRevenueByMonth'
@@ -12,8 +12,11 @@ import { ChartTopProductSalesByMonth } from './charts/ChartTopProductSalesByMont
 import { ChartSalesByCategory } from './charts/ChartSalesByCategory'
 
 export function ProductsCharts() {
-  const products = useProductsStore((state) => state.products)
-  const sales = useSalesStore((state) => state.sales)
+  type ProductsStore = ReturnType<typeof useProductsStore.getState>
+  type SalesStore = ReturnType<typeof useSalesStore.getState>
+
+  const products = useProductsStore((state: ProductsStore) => state.products)
+  const sales = useSalesStore((state: SalesStore) => state.sales)
   const chartData = useChartData(products, sales)
 
   if (products.length === 0 && sales.length === 0) {

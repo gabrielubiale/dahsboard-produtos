@@ -1,18 +1,24 @@
 import { useMemo } from 'react'
 import { Package, CheckCircle, ShoppingCart, CurrencyDollar } from 'phosphor-react'
-import { useProductsStore } from '../../../store/productsStore'
-import { useSalesStore } from '../../../store/salesStore'
-import { StatCard } from '../../../shared/components/StatCard'
+import { useProductsStore } from '../../../../store/productsStore'
+import { useSalesStore } from '../../../../store/salesStore'
+import { StatCard } from '../../../../shared/components/StatCard/StatCard'
 
 export function StatsCardsProductsDashboard() {
-  const products = useProductsStore((state) => state.products)
-  const sales = useSalesStore((state) => state.sales)
+  type ProductsStore = ReturnType<typeof useProductsStore.getState>
+  type SalesStore = ReturnType<typeof useSalesStore.getState>
+
+  const products = useProductsStore((state: ProductsStore) => state.products)
+  const sales = useSalesStore((state: SalesStore) => state.sales)
 
   const stats = useMemo(() => {
     const total = products.length
     const active = products.filter((p) => p.status === 'active').length
     const totalVendas = sales.length
-    const totalFaturamento = sales.reduce((sum, s) => sum + s.totalAmount, 0)
+    const totalFaturamento = sales.reduce(
+      (sum: number, s) => sum + s.totalAmount,
+      0,
+    )
 
     return {
       total,

@@ -1,5 +1,5 @@
 import { Doughnut } from 'react-chartjs-2'
-import '../../../../config/chartjs'
+import '../../../../../config/chartjs'
 
 type Props = { data: { labels: string[]; data: number[] } }
 

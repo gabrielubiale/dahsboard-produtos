@@ -1,20 +1,21 @@
 import { Bar } from 'react-chartjs-2'
-import '../../../../config/chartjs'
+import '../../../../../config/chartjs'
 
 type Props = { data: { labels: string[]; data: number[] } }
 
-export function ChartRevenueByMonth({ data }: Props) {
+export function ChartProductsMostRevenue({ data }: Props) {
   const chartData = {
     labels: data.labels,
     datasets: [{
       label: 'Faturamento (R$)',
       data: data.data,
-      backgroundColor: '#8b5cf6',
-      borderColor: '#7c3aed',
+      backgroundColor: '#22c55e',
+      borderColor: '#16a34a',
       borderWidth: 1,
     }],
   }
   const options = {
+    indexAxis: 'y' as const,
     responsive: true,
     maintainAspectRatio: true,
     plugins: {
@@ -26,18 +27,18 @@ export function ChartRevenueByMonth({ data }: Props) {
         borderColor: '#374151',
         borderWidth: 1,
         callbacks: {
-          label: (ctx: { parsed: { y: number | null } }) =>
-            (ctx.parsed.y ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+          label: (ctx: { parsed: { x: number | null } }) =>
+            (ctx.parsed.x ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
         },
       },
     },
     scales: {
       x: {
+        beginAtZero: true,
         ticks: { color: '#9ca3af' },
         grid: { color: '#374151' },
       },
       y: {
-        beginAtZero: true,
         ticks: { color: '#9ca3af' },
         grid: { color: '#374151' },
       },

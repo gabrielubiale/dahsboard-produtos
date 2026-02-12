@@ -1,7 +1,7 @@
 import { Pencil, Trash } from 'phosphor-react'
-import type { Product } from '../../../services/types'
-import type { Column } from '../../../shared/components/DynamicTable'
-import { DynamicTable } from '../../../shared/components/DynamicTable'
+import type { Product } from '../../../../services/types'
+import type { Column } from '../../../../shared/components/DynamicTable/DynamicTable'
+import { DynamicTable } from '../../../../shared/components/DynamicTable/DynamicTable'
 
 type ProductsTableProps = {
   products: Product[]
@@ -14,14 +14,14 @@ export function ProductsTable({ products, onEdit, onDelete }: ProductsTableProps
     {
       id: 'name',
       header: 'Nome',
-      render: (product) => (
+      render: (product: Product) => (
         <span className="font-medium text-white">{product.name}</span>
       ),
     },
     {
       id: 'category',
       header: 'Categoria',
-      render: (product) => (
+      render: (product: Product) => (
         <span className="text-gray-400">{product.category}</span>
       ),
     },
@@ -29,7 +29,7 @@ export function ProductsTable({ products, onEdit, onDelete }: ProductsTableProps
       id: 'price',
       header: 'Preço',
       align: 'right',
-      render: (product) => (
+      render: (product: Product) => (
         <span className="font-semibold text-white">
           {product.price.toLocaleString('pt-BR', {
             style: 'currency',
@@ -41,7 +41,7 @@ export function ProductsTable({ products, onEdit, onDelete }: ProductsTableProps
     {
       id: 'status',
       header: 'Status',
-      render: (product) => (
+      render: (product: Product) => (
         <span
           className={`
             inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold
@@ -59,7 +59,7 @@ export function ProductsTable({ products, onEdit, onDelete }: ProductsTableProps
       id: 'actions',
       header: 'Ações',
       align: 'right',
-      render: (product) => (
+      render: (product: Product) => (
         <div className="flex items-center justify-end gap-1">
           <button
             type="button"
@@ -86,7 +86,7 @@ export function ProductsTable({ products, onEdit, onDelete }: ProductsTableProps
     <DynamicTable<Product>
       data={products}
       columns={columns}
-      keyExtractor={(p) => p.id}
+      keyExtractor={(p: Product) => p.id}
       minWidth="800px"
     />
   )

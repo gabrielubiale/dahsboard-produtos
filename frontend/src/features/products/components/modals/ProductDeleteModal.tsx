@@ -1,4 +1,4 @@
-import { ConfirmModal } from '../../../shared/components/ConfirmModal'
+import { ConfirmModal } from '../../../../shared/components/ConfirmModal/ConfirmModal'
 
 type ProductDeleteModalProps = {
   isOpen: boolean

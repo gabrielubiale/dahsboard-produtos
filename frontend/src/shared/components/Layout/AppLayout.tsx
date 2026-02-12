@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { Sidebar } from './Sidebar'
+import { Sidebar } from '../Sidebar/Sidebar'
 
 export function AppLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -12,7 +12,7 @@ export function AppLayout() {
         <Sidebar isOpen={true} />
       </div>
 
-      {/* sidebar Mobile (Drawer) */}
+      {/* sidebar para mobile */}
       {sidebarOpen && (
         <>
           <div 

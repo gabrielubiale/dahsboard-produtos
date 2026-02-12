@@ -1,6 +1,6 @@
-import { useProductsStore } from '../../../store/productsStore'
-import { Modal } from '../../../shared/components/Modal'
-import { ProductFormFields } from './ProductFormFields'
+import { useProductsStore } from '../../../../store/productsStore'
+import { Modal } from '../../../../shared/components/Modal/Modal'
+import { ProductFormFields } from '../form/ProductFormFields'
 
 type ProductCreateModalProps = {
   isOpen: boolean

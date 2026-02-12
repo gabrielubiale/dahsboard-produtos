@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useProductsStore } from '../../../store/productsStore'
+import { useProductsStore } from '../../../../store/productsStore'
 import { ProductFormFields } from './ProductFormFields'
 
 export function ProductForm() {
