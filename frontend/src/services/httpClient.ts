@@ -1,14 +1,14 @@
 // const BASE_URL =
 //   import.meta.env.VITE_API_URL ?? 'http://localhost:3001'
 
-const BASE_URL = 'https://dahsboard-produtos-production.up.railway.app/'
-
-console.log("BASE_URL", BASE_URL)
+const BASE_URL = 'https://dahsboard-produtos-production.up.railway.app'
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const url = `${BASE_URL}${path}`
+  const method = (options.method ?? 'GET') as string
+  console.log('[httpClient]', method, url)
 
   const response = await fetch(url, {
     headers: {
@@ -19,6 +19,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   })
 
   if (!response.ok) {
+    console.log('[httpClient] ERRO', response.status, url)
     const message = `HTTP error ${response.status}`
     throw new Error(message)
   }
