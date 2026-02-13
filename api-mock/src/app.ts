@@ -10,11 +10,23 @@ import { salesRouter } from './routes/sales'
 export function createApp() {
   const app = express()
 
-  // permite que o front faça requisições (local ou Vercel). FRONTEND_URL no Railway = URL do front (https://lively-solace-production-3892.up.railway.app/)
-  const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:5173'
+  // permite que o front faça requisições (local, Vercel ou Railway)
+  const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    /\.railway\.app$/,
+    /\.vercel\.app$/,
+    /^http:\/\/localhost(:\d+)?$/,
+  ].filter(Boolean)
+
   app.use(
     cors({
-      origin: allowedOrigin,
+      origin: (origin, cb) => {
+        if (!origin) return cb(null, true)
+        const ok = allowedOrigins.some((o) =>
+          typeof o === 'string' ? o === origin : (o as RegExp).test(origin)
+        )
+        cb(null, ok)
+      },
     }),
   )
 

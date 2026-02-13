@@ -28,11 +28,55 @@ A rota `/` exibe uma LandingPage com esta documentação. O Dashboard está em `
 
 ---
 
-## Deploy
+## Deploy no Railway (front + back)
 
-**Frontend (Vercel):** O `vercel.json` aponta para `frontend/`. No Vercel, adicione a variável de ambiente `VITE_API_URL` com a URL da API (ex: `https://lively-solace-production-3892.up.railway.app`).
+### Pré-requisitos
 
-**API (Railway):** Adicione a variável `FRONTEND_URL` com a URL do front no Vercel (ex: `https://seu-app.vercel.app`) para liberar CORS.
+- Conta no [Railway](https://railway.app)
+- Repositório no GitHub
+- O frontend já tem o script `start` e a dependência `serve` para servir os arquivos estáticos
+
+### Passo a passo
+
+**1. Criar projeto no Railway**
+
+- Acesse [railway.app](https://railway.app) e faça login (GitHub).
+- Clique em **New Project**.
+- Escolha **Deploy from GitHub repo**.
+- Conecte o repositório e selecione o branch (ex: `deploy`).
+
+**2. Serviço da API**
+
+- O primeiro serviço será a API. Em **Settings**:
+  - **Root Directory:** `api-mock`
+  - **Build Command:** `npm run build`
+  - **Start Command:** `npm start`
+- Em **Variables:** não precisa configurar nada para começar (o CORS aceita `.railway.app` e `localhost`).
+- Em **Networking**, clique em **Generate Domain** e anote a URL (ex: `https://xxx.up.railway.app`).
+
+**3. Serviço do Frontend**
+
+- Clique em **+ New** no projeto e escolha **Empty Service** ou **Deploy from same repo**.
+- Em **Settings**:
+  - **Root Directory:** `frontend`
+  - **Build Command:** `npm run build`
+  - **Start Command:** `npm start`
+- Em **Variables**, adicione:
+  - **VITE_API_URL** = URL da API (ex: `https://xxx.up.railway.app` da etapa 2)
+- Em **Networking**, clique em **Generate Domain** e anote a URL do frontend.
+
+**4. Verificar**
+
+- Abra a URL do frontend no navegador.
+- O dashboard deve carregar os dados da API.
+
+**5. Rodar local apontando para a API no Railway**
+
+- Crie um arquivo `frontend/.env.local` com:
+  ```
+  VITE_API_URL=https://sua-api.up.railway.app
+  ```
+- Rode `npm run dev` no frontend. O CORS já aceita `localhost`.
 
 ---
 
